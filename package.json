@@ -11,7 +11,7 @@
   "main": "send_msg.js",
   "devDependencies": {},
   "scripts": {
-    "test": "nodemon server.js"
+    "test": "nodemon ws_auto_back.js"
   },
   "author": "Upendra Verma",
   "license": "ISC"
