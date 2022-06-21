@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="ws_auto.css" />
+    <script src="ws_auto.js"></script>
+    <title>WhatsApp Automation</title>
+  </head>
+
+  <body>
+    <div class="main" id="main">
+      <div class="mobnum_div" id="mobnum_div">
+        <label for="contact" class="mobnum_ip_txt">
+          Mobile Number in International format (f.e. 9199999999)
+        </label>
+        <input
+          class="mobnum_ip_val"
+          id="contact"
+          type="text"
+          width="10"
+          height="10"
+          size="10"
+          inputmode="tel"
+        />
+      </div>
+      <div class="message_div" id="message_div">
+        <div class="msg_ip_txt_div" id="msg_ip_txt_div">
+          <label for="message" class="msg_ip_txt">Message</label>
+        </div>
+        <div class="msg_ip_msg_div" id="msg_ip_msg_div">
+          <textarea
+            class="msg_ip_msg"
+            id="message"
+            type="text"
+            rows="5"
+            maxlength="255"
+          >
+          </textarea>
+        </div>
+      </div>
+      <div class="sendbtn_div" id="sendbtn_div">
+        <input class="msg_ip_btn" id="msg_ip_btn" type="button" value="Send" />
+      </div>
+      <div class="status_msg" id="status_msg">
+        <label for="status_text" class="status_text">
+          Current Status
+        </label>        
+        <input class="status_text" id="status_text" type="text" disabled />
+      </div>
+    </div>
+  </body>
+</html>
