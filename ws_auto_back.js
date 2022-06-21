@@ -35,6 +35,7 @@ ws_server.on("stream", (stream, Headers) => {
     ws_status_msg = "QR generated!";
     writestream(stream);
   });
+  
 
   client.on("ready", () => {
     console.log("Client is ready!");
