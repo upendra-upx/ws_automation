@@ -2821,3 +2821,110 @@ whatsapp-web.js-main/whatsapp-web.js-main/tools/version-checker/update-version
 .wwebjs_auth/session/Default/Session Storage/MANIFEST-000001
 .wwebjs_auth/session/Default/databases/Databases.db
 .wwebjs_auth/session/Default/databases/Databases.db-journal
+.wwebjs_auth/session/Default/Cache/Cache_Data/f_00014a
+.wwebjs_auth/session/Default/Cache/Cache_Data/f_00014b
+.wwebjs_auth/session/Default/Cache/Cache_Data/f_00014c
+.wwebjs_auth/session/Default/Cache/Cache_Data/f_00014d
+.wwebjs_auth/session/Default/Cache/Cache_Data/f_00014e
+.wwebjs_auth/session/Default/Cache/Cache_Data/f_00014f
+.wwebjs_auth/session/Default/Cache/Cache_Data/f_000147
+.wwebjs_auth/session/Default/Cache/Cache_Data/f_000148
+.wwebjs_auth/session/Default/Cache/Cache_Data/f_000149
+.wwebjs_auth/session/Default/Cache/Cache_Data/f_000150
+.wwebjs_auth/session/Default/Cache/Cache_Data/f_000151
+.wwebjs_auth/session/Default/Cache/Cache_Data/f_000152
+.wwebjs_auth/session/Default/Cache/Cache_Data/f_000153
+.wwebjs_auth/session/Default/IndexedDB/https_web.whatsapp.com_0.indexeddb.blob/5/00/7
+.wwebjs_auth/session/Default/IndexedDB/https_web.whatsapp.com_0.indexeddb.leveldb/000253.log
+.wwebjs_auth/session/Default/IndexedDB/https_web.whatsapp.com_0.indexeddb.leveldb/000255.ldb
+.wwebjs_auth/session/Default/IndexedDB/https_web.whatsapp.com_0.indexeddb.leveldb/000256.ldb
+.wwebjs_auth/session/Default/IndexedDB/https_web.whatsapp.com_0.indexeddb.leveldb/000257.ldb
+.wwebjs_auth/session/Default/IndexedDB/https_web.whatsapp.com_0.indexeddb.leveldb/000258.ldb
+.wwebjs_auth/session/Default/IndexedDB/https_web.whatsapp.com_0.indexeddb.leveldb/000259.ldb
+.wwebjs_auth/session/Default/IndexedDB/https_web.whatsapp.com_0.indexeddb.leveldb/000260.ldb
+.wwebjs_auth/session/Default/Service Worker/CacheStorage/0bf6ab7f94a21cdc9c1649f884333ec20f40a544/213a0d2b-9dfb-4bf1-a488-3c2cb6a50c22/0af9d1009189ecad_0
+.wwebjs_auth/session/Default/Service Worker/CacheStorage/0bf6ab7f94a21cdc9c1649f884333ec20f40a544/213a0d2b-9dfb-4bf1-a488-3c2cb6a50c22/0af9d1009189ecad_1
+.wwebjs_auth/session/Default/Service Worker/CacheStorage/0bf6ab7f94a21cdc9c1649f884333ec20f40a544/213a0d2b-9dfb-4bf1-a488-3c2cb6a50c22/0d9cdb84eaea3c23_0
+.wwebjs_auth/session/Default/Service Worker/CacheStorage/0bf6ab7f94a21cdc9c1649f884333ec20f40a544/213a0d2b-9dfb-4bf1-a488-3c2cb6a50c22/0d9cdb84eaea3c23_1
+.wwebjs_auth/session/Default/Service Worker/CacheStorage/0bf6ab7f94a21cdc9c1649f884333ec20f40a544/213a0d2b-9dfb-4bf1-a488-3c2cb6a50c22/0e07735d61bafcf7_0
+.wwebjs_auth/session/Default/Service Worker/CacheStorage/0bf6ab7f94a21cdc9c1649f884333ec20f40a544/213a0d2b-9dfb-4bf1-a488-3c2cb6a50c22/02a76bbc4864b089_0
+.wwebjs_auth/session/Default/Service Worker/CacheStorage/0bf6ab7f94a21cdc9c1649f884333ec20f40a544/213a0d2b-9dfb-4bf1-a488-3c2cb6a50c22/4b3b915d0fdfb9f5_0
+.wwebjs_auth/session/Default/Service Worker/CacheStorage/0bf6ab7f94a21cdc9c1649f884333ec20f40a544/213a0d2b-9dfb-4bf1-a488-3c2cb6a50c22/4b3b915d0fdfb9f5_1
+.wwebjs_auth/session/Default/Service Worker/CacheStorage/0bf6ab7f94a21cdc9c1649f884333ec20f40a544/213a0d2b-9dfb-4bf1-a488-3c2cb6a50c22/4eb71bf03c635ab7_0
+.wwebjs_auth/session/Default/Service Worker/CacheStorage/0bf6ab7f94a21cdc9c1649f884333ec20f40a544/213a0d2b-9dfb-4bf1-a488-3c2cb6a50c22/4eb71bf03c635ab7_1
+.wwebjs_auth/session/Default/Service Worker/CacheStorage/0bf6ab7f94a21cdc9c1649f884333ec20f40a544/213a0d2b-9dfb-4bf1-a488-3c2cb6a50c22/5a196e460a75492e_0
+.wwebjs_auth/session/Default/Service Worker/CacheStorage/0bf6ab7f94a21cdc9c1649f884333ec20f40a544/213a0d2b-9dfb-4bf1-a488-3c2cb6a50c22/5b3372747722fd33_0
+.wwebjs_auth/session/Default/Service Worker/CacheStorage/0bf6ab7f94a21cdc9c1649f884333ec20f40a544/213a0d2b-9dfb-4bf1-a488-3c2cb6a50c22/6f2a00ff9c88e501_0
+.wwebjs_auth/session/Default/Service Worker/CacheStorage/0bf6ab7f94a21cdc9c1649f884333ec20f40a544/213a0d2b-9dfb-4bf1-a488-3c2cb6a50c22/6f76bf2025e6654a_0
+.wwebjs_auth/session/Default/Service Worker/CacheStorage/0bf6ab7f94a21cdc9c1649f884333ec20f40a544/213a0d2b-9dfb-4bf1-a488-3c2cb6a50c22/7c03364fd07ce029_0
+.wwebjs_auth/session/Default/Service Worker/CacheStorage/0bf6ab7f94a21cdc9c1649f884333ec20f40a544/213a0d2b-9dfb-4bf1-a488-3c2cb6a50c22/7c03364fd07ce029_1
+.wwebjs_auth/session/Default/Service Worker/CacheStorage/0bf6ab7f94a21cdc9c1649f884333ec20f40a544/213a0d2b-9dfb-4bf1-a488-3c2cb6a50c22/7f3f29e592710c2e_0
+.wwebjs_auth/session/Default/Service Worker/CacheStorage/0bf6ab7f94a21cdc9c1649f884333ec20f40a544/213a0d2b-9dfb-4bf1-a488-3c2cb6a50c22/7f3f29e592710c2e_1
+.wwebjs_auth/session/Default/Service Worker/CacheStorage/0bf6ab7f94a21cdc9c1649f884333ec20f40a544/213a0d2b-9dfb-4bf1-a488-3c2cb6a50c22/9a652866f68daf4c_0
+.wwebjs_auth/session/Default/Service Worker/CacheStorage/0bf6ab7f94a21cdc9c1649f884333ec20f40a544/213a0d2b-9dfb-4bf1-a488-3c2cb6a50c22/9a652866f68daf4c_1
+.wwebjs_auth/session/Default/Service Worker/CacheStorage/0bf6ab7f94a21cdc9c1649f884333ec20f40a544/213a0d2b-9dfb-4bf1-a488-3c2cb6a50c22/15b4f8770bbaff5f_0
+.wwebjs_auth/session/Default/Service Worker/CacheStorage/0bf6ab7f94a21cdc9c1649f884333ec20f40a544/213a0d2b-9dfb-4bf1-a488-3c2cb6a50c22/15f064e079cd9e2c_0
+.wwebjs_auth/session/Default/Service Worker/CacheStorage/0bf6ab7f94a21cdc9c1649f884333ec20f40a544/213a0d2b-9dfb-4bf1-a488-3c2cb6a50c22/19aa9078b8bb4bed_0
+.wwebjs_auth/session/Default/Service Worker/CacheStorage/0bf6ab7f94a21cdc9c1649f884333ec20f40a544/213a0d2b-9dfb-4bf1-a488-3c2cb6a50c22/19aa9078b8bb4bed_1
+.wwebjs_auth/session/Default/Service Worker/CacheStorage/0bf6ab7f94a21cdc9c1649f884333ec20f40a544/213a0d2b-9dfb-4bf1-a488-3c2cb6a50c22/29cc20b5cb815f8c_0
+.wwebjs_auth/session/Default/Service Worker/CacheStorage/0bf6ab7f94a21cdc9c1649f884333ec20f40a544/213a0d2b-9dfb-4bf1-a488-3c2cb6a50c22/31dc85f7cc6f0152_0
+.wwebjs_auth/session/Default/Service Worker/CacheStorage/0bf6ab7f94a21cdc9c1649f884333ec20f40a544/213a0d2b-9dfb-4bf1-a488-3c2cb6a50c22/31dc85f7cc6f0152_1
+.wwebjs_auth/session/Default/Service Worker/CacheStorage/0bf6ab7f94a21cdc9c1649f884333ec20f40a544/213a0d2b-9dfb-4bf1-a488-3c2cb6a50c22/34fb308d82ad69bd_0
+.wwebjs_auth/session/Default/Service Worker/CacheStorage/0bf6ab7f94a21cdc9c1649f884333ec20f40a544/213a0d2b-9dfb-4bf1-a488-3c2cb6a50c22/37c974137c9cc9a0_0
+.wwebjs_auth/session/Default/Service Worker/CacheStorage/0bf6ab7f94a21cdc9c1649f884333ec20f40a544/213a0d2b-9dfb-4bf1-a488-3c2cb6a50c22/37c974137c9cc9a0_1
+.wwebjs_auth/session/Default/Service Worker/CacheStorage/0bf6ab7f94a21cdc9c1649f884333ec20f40a544/213a0d2b-9dfb-4bf1-a488-3c2cb6a50c22/40b63a956e703ab9_0
+.wwebjs_auth/session/Default/Service Worker/CacheStorage/0bf6ab7f94a21cdc9c1649f884333ec20f40a544/213a0d2b-9dfb-4bf1-a488-3c2cb6a50c22/40b63a956e703ab9_1
+.wwebjs_auth/session/Default/Service Worker/CacheStorage/0bf6ab7f94a21cdc9c1649f884333ec20f40a544/213a0d2b-9dfb-4bf1-a488-3c2cb6a50c22/53f330f645de8c98_0
+.wwebjs_auth/session/Default/Service Worker/CacheStorage/0bf6ab7f94a21cdc9c1649f884333ec20f40a544/213a0d2b-9dfb-4bf1-a488-3c2cb6a50c22/53f330f645de8c98_1
+.wwebjs_auth/session/Default/Service Worker/CacheStorage/0bf6ab7f94a21cdc9c1649f884333ec20f40a544/213a0d2b-9dfb-4bf1-a488-3c2cb6a50c22/56cfecd836ef4121_0
+.wwebjs_auth/session/Default/Service Worker/CacheStorage/0bf6ab7f94a21cdc9c1649f884333ec20f40a544/213a0d2b-9dfb-4bf1-a488-3c2cb6a50c22/56cfecd836ef4121_1
+.wwebjs_auth/session/Default/Service Worker/CacheStorage/0bf6ab7f94a21cdc9c1649f884333ec20f40a544/213a0d2b-9dfb-4bf1-a488-3c2cb6a50c22/62a5306b0628909a_0
+.wwebjs_auth/session/Default/Service Worker/CacheStorage/0bf6ab7f94a21cdc9c1649f884333ec20f40a544/213a0d2b-9dfb-4bf1-a488-3c2cb6a50c22/82e1d3a9327e4d03_0
+.wwebjs_auth/session/Default/Service Worker/CacheStorage/0bf6ab7f94a21cdc9c1649f884333ec20f40a544/213a0d2b-9dfb-4bf1-a488-3c2cb6a50c22/95af8bc3ee904fc8_0
+.wwebjs_auth/session/Default/Service Worker/CacheStorage/0bf6ab7f94a21cdc9c1649f884333ec20f40a544/213a0d2b-9dfb-4bf1-a488-3c2cb6a50c22/203da72b01f43ed7_0
+.wwebjs_auth/session/Default/Service Worker/CacheStorage/0bf6ab7f94a21cdc9c1649f884333ec20f40a544/213a0d2b-9dfb-4bf1-a488-3c2cb6a50c22/203da72b01f43ed7_1
+.wwebjs_auth/session/Default/Service Worker/CacheStorage/0bf6ab7f94a21cdc9c1649f884333ec20f40a544/213a0d2b-9dfb-4bf1-a488-3c2cb6a50c22/521c6cb796bc8969_0
+.wwebjs_auth/session/Default/Service Worker/CacheStorage/0bf6ab7f94a21cdc9c1649f884333ec20f40a544/213a0d2b-9dfb-4bf1-a488-3c2cb6a50c22/521c6cb796bc8969_1
+.wwebjs_auth/session/Default/Service Worker/CacheStorage/0bf6ab7f94a21cdc9c1649f884333ec20f40a544/213a0d2b-9dfb-4bf1-a488-3c2cb6a50c22/593ab51896ce29e6_0
+.wwebjs_auth/session/Default/Service Worker/CacheStorage/0bf6ab7f94a21cdc9c1649f884333ec20f40a544/213a0d2b-9dfb-4bf1-a488-3c2cb6a50c22/875c594f5bd12402_0
+.wwebjs_auth/session/Default/Service Worker/CacheStorage/0bf6ab7f94a21cdc9c1649f884333ec20f40a544/213a0d2b-9dfb-4bf1-a488-3c2cb6a50c22/875c594f5bd12402_1
+.wwebjs_auth/session/Default/Service Worker/CacheStorage/0bf6ab7f94a21cdc9c1649f884333ec20f40a544/213a0d2b-9dfb-4bf1-a488-3c2cb6a50c22/930e10e7fdaa88e7_0
+.wwebjs_auth/session/Default/Service Worker/CacheStorage/0bf6ab7f94a21cdc9c1649f884333ec20f40a544/213a0d2b-9dfb-4bf1-a488-3c2cb6a50c22/930e10e7fdaa88e7_1
+.wwebjs_auth/session/Default/Service Worker/CacheStorage/0bf6ab7f94a21cdc9c1649f884333ec20f40a544/213a0d2b-9dfb-4bf1-a488-3c2cb6a50c22/3009b240d9905899_0
+.wwebjs_auth/session/Default/Service Worker/CacheStorage/0bf6ab7f94a21cdc9c1649f884333ec20f40a544/213a0d2b-9dfb-4bf1-a488-3c2cb6a50c22/5662bb32cd7581a8_0
+.wwebjs_auth/session/Default/Service Worker/CacheStorage/0bf6ab7f94a21cdc9c1649f884333ec20f40a544/213a0d2b-9dfb-4bf1-a488-3c2cb6a50c22/019025487f58206c_0
+.wwebjs_auth/session/Default/Service Worker/CacheStorage/0bf6ab7f94a21cdc9c1649f884333ec20f40a544/213a0d2b-9dfb-4bf1-a488-3c2cb6a50c22/019025487f58206c_1
+.wwebjs_auth/session/Default/Service Worker/CacheStorage/0bf6ab7f94a21cdc9c1649f884333ec20f40a544/213a0d2b-9dfb-4bf1-a488-3c2cb6a50c22/a1d9de4f4d0f159f_0
+.wwebjs_auth/session/Default/Service Worker/CacheStorage/0bf6ab7f94a21cdc9c1649f884333ec20f40a544/213a0d2b-9dfb-4bf1-a488-3c2cb6a50c22/a2d70e4ad21d4aca_0
+.wwebjs_auth/session/Default/Service Worker/CacheStorage/0bf6ab7f94a21cdc9c1649f884333ec20f40a544/213a0d2b-9dfb-4bf1-a488-3c2cb6a50c22/aa793061b97820a9_0
+.wwebjs_auth/session/Default/Service Worker/CacheStorage/0bf6ab7f94a21cdc9c1649f884333ec20f40a544/213a0d2b-9dfb-4bf1-a488-3c2cb6a50c22/aa793061b97820a9_1
+.wwebjs_auth/session/Default/Service Worker/CacheStorage/0bf6ab7f94a21cdc9c1649f884333ec20f40a544/213a0d2b-9dfb-4bf1-a488-3c2cb6a50c22/b40c0a2a1940fd47_0
+.wwebjs_auth/session/Default/Service Worker/CacheStorage/0bf6ab7f94a21cdc9c1649f884333ec20f40a544/213a0d2b-9dfb-4bf1-a488-3c2cb6a50c22/b40c0a2a1940fd47_1
+.wwebjs_auth/session/Default/Service Worker/CacheStorage/0bf6ab7f94a21cdc9c1649f884333ec20f40a544/213a0d2b-9dfb-4bf1-a488-3c2cb6a50c22/c11df6d00af4cff8_0
+.wwebjs_auth/session/Default/Service Worker/CacheStorage/0bf6ab7f94a21cdc9c1649f884333ec20f40a544/213a0d2b-9dfb-4bf1-a488-3c2cb6a50c22/c4196b141c3ec4fe_0
+.wwebjs_auth/session/Default/Service Worker/CacheStorage/0bf6ab7f94a21cdc9c1649f884333ec20f40a544/213a0d2b-9dfb-4bf1-a488-3c2cb6a50c22/c78956c3a0eab46a_0
+.wwebjs_auth/session/Default/Service Worker/CacheStorage/0bf6ab7f94a21cdc9c1649f884333ec20f40a544/213a0d2b-9dfb-4bf1-a488-3c2cb6a50c22/c78956c3a0eab46a_1
+.wwebjs_auth/session/Default/Service Worker/CacheStorage/0bf6ab7f94a21cdc9c1649f884333ec20f40a544/213a0d2b-9dfb-4bf1-a488-3c2cb6a50c22/cd1af2464cc84dae_0
+.wwebjs_auth/session/Default/Service Worker/CacheStorage/0bf6ab7f94a21cdc9c1649f884333ec20f40a544/213a0d2b-9dfb-4bf1-a488-3c2cb6a50c22/cd1af2464cc84dae_1
+.wwebjs_auth/session/Default/Service Worker/CacheStorage/0bf6ab7f94a21cdc9c1649f884333ec20f40a544/213a0d2b-9dfb-4bf1-a488-3c2cb6a50c22/e7c238343c51d87c_0
+.wwebjs_auth/session/Default/Service Worker/CacheStorage/0bf6ab7f94a21cdc9c1649f884333ec20f40a544/213a0d2b-9dfb-4bf1-a488-3c2cb6a50c22/e7c238343c51d87c_1
+.wwebjs_auth/session/Default/Service Worker/CacheStorage/0bf6ab7f94a21cdc9c1649f884333ec20f40a544/213a0d2b-9dfb-4bf1-a488-3c2cb6a50c22/e43f71e531e90913_0
+.wwebjs_auth/session/Default/Service Worker/CacheStorage/0bf6ab7f94a21cdc9c1649f884333ec20f40a544/213a0d2b-9dfb-4bf1-a488-3c2cb6a50c22/e43f71e531e90913_1
+.wwebjs_auth/session/Default/Service Worker/CacheStorage/0bf6ab7f94a21cdc9c1649f884333ec20f40a544/213a0d2b-9dfb-4bf1-a488-3c2cb6a50c22/e252c7e58bfca37c_0
+.wwebjs_auth/session/Default/Service Worker/CacheStorage/0bf6ab7f94a21cdc9c1649f884333ec20f40a544/213a0d2b-9dfb-4bf1-a488-3c2cb6a50c22/f3ce748477bf2b53_0
+.wwebjs_auth/session/Default/Service Worker/CacheStorage/0bf6ab7f94a21cdc9c1649f884333ec20f40a544/213a0d2b-9dfb-4bf1-a488-3c2cb6a50c22/f3ce748477bf2b53_1
+.wwebjs_auth/session/Default/Service Worker/CacheStorage/0bf6ab7f94a21cdc9c1649f884333ec20f40a544/213a0d2b-9dfb-4bf1-a488-3c2cb6a50c22/f6cab9f0c321ffa9_0
+.wwebjs_auth/session/Default/Service Worker/CacheStorage/0bf6ab7f94a21cdc9c1649f884333ec20f40a544/213a0d2b-9dfb-4bf1-a488-3c2cb6a50c22/f6cab9f0c321ffa9_1
+.wwebjs_auth/session/Default/Service Worker/CacheStorage/0bf6ab7f94a21cdc9c1649f884333ec20f40a544/213a0d2b-9dfb-4bf1-a488-3c2cb6a50c22/f033c682fcbb57d5_0
+.wwebjs_auth/session/Default/Service Worker/CacheStorage/0bf6ab7f94a21cdc9c1649f884333ec20f40a544/213a0d2b-9dfb-4bf1-a488-3c2cb6a50c22/f033c682fcbb57d5_1
+.wwebjs_auth/session/Default/Service Worker/CacheStorage/0bf6ab7f94a21cdc9c1649f884333ec20f40a544/213a0d2b-9dfb-4bf1-a488-3c2cb6a50c22/f351d804398a2a74_0
+.wwebjs_auth/session/Default/Service Worker/CacheStorage/0bf6ab7f94a21cdc9c1649f884333ec20f40a544/213a0d2b-9dfb-4bf1-a488-3c2cb6a50c22/f351d804398a2a74_1
+.wwebjs_auth/session/Default/Service Worker/CacheStorage/0bf6ab7f94a21cdc9c1649f884333ec20f40a544/213a0d2b-9dfb-4bf1-a488-3c2cb6a50c22/fd977350ce62653f_0
+.wwebjs_auth/session/Default/Service Worker/CacheStorage/0bf6ab7f94a21cdc9c1649f884333ec20f40a544/213a0d2b-9dfb-4bf1-a488-3c2cb6a50c22/fd977350ce62653f_1
+.wwebjs_auth/session/Default/Service Worker/CacheStorage/0bf6ab7f94a21cdc9c1649f884333ec20f40a544/213a0d2b-9dfb-4bf1-a488-3c2cb6a50c22/ff3992172349c21d_0
+.wwebjs_auth/session/Default/Service Worker/CacheStorage/0bf6ab7f94a21cdc9c1649f884333ec20f40a544/213a0d2b-9dfb-4bf1-a488-3c2cb6a50c22/index
+.wwebjs_auth/session/Default/Service Worker/CacheStorage/0bf6ab7f94a21cdc9c1649f884333ec20f40a544/213a0d2b-9dfb-4bf1-a488-3c2cb6a50c22/index-dir/the-real-index
+.wwebjs_auth/session/Default/Service Worker/CacheStorage/0bf6ab7f94a21cdc9c1649f884333ec20f40a544/f8c2041e-1f8b-4d1b-8967-a2e2ccc2cbba/index
+.wwebjs_auth/session/Default/Service Worker/CacheStorage/0bf6ab7f94a21cdc9c1649f884333ec20f40a544/f8c2041e-1f8b-4d1b-8967-a2e2ccc2cbba/index-dir/the-real-index
+.wwebjs_auth/session/Default/Service Worker/ScriptCache/14d9579db3cecf92_0
+.wwebjs_auth/session/Default/Service Worker/ScriptCache/14d9579db3cecf92_1
