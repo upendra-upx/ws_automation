@@ -24,11 +24,15 @@ var socket;
 
 function displayMessage(message, style) {
   var chat = document.getElementById("chat");
-  let chatmessage = document.createElement("li");
-  chatmessage.innerHTML = message; //message.replace(/\\\"/g,`"`);
+  let chatmessage = document.createElement("div");
+  let chit = document.createElement("div");
+
   chatmessage.className = `chat_messages`;
-  chatmessage.style.textAlign = style.textAlign;
-  chatmessage.style.backgroundColor = style.backgroundColor;
+  chatmessage.style.alignItems = style.alignItems;
+  chit.className = `chit`;
+  chit.innerHTML = message; 
+  chit.style.backgroundColor = style.backgroundColor;  
+  chatmessage.appendChild(chit);
   chat.appendChild(chatmessage);
 }
 
@@ -45,7 +49,7 @@ window.onload = function () {
     console.log(`[message] Data received from server: ${message.data}`);
     let msg = JSON.parse(message.data);
 
-    let htmlmsg, timecolor, fromcolor, style = {textAlign:``, backgroundColor:``};
+    let htmlmsg, timecolor, fromcolor, style = {alignItems:``, backgroundColor:``};
 
     if ((msg.status == STATUS_GREEN)) {
       timecolor = `hsl(100, 100%, 35%)`;
@@ -55,16 +59,16 @@ window.onload = function () {
       timecolor = `hsl(0, 100%, 50%)`;
     };
 
-    style.textAlign = `left`;
+    style.alignItems = `flex-start`;
     style.backgroundColor = `hsl(0deg 100% 100%)`;
 
     if (msg.from == FROM_WS_AUTO_CLIENT) {
-      fromcolor = `hsl(20, 100%, 50%)`;
-      style.textAlign = `end`;
+      fromcolor = `hsl(0deg 100% 50%);`;
+      style.alignItems = `flex-end`;
       style.backgroundColor = `hsl(87deg 89% 90%)`;      
     } else if (msg.from == FROM_WS_AUTO_SERVER) {
       fromcolor = `hsl(240, 100%, 50%)`;
-      style.textAlign = `center`;
+      style.alignItems = `center`;
       style.backgroundColor = `hsl(50deg 100% 90%)`;
     } else {
       fromcolor = `hsl(0, 0%, 0%)`;
