@@ -364,7 +364,7 @@ async function getWSChat(contact) {
 
 async function sendWSMessage(chat, message) {
   try {
-    let return_message = await chat.sendMessage(message);
+    let return_message = await chat.sendMessage(message.replace(/<br>/g,`\n`));
     return return_message;
   } catch (error) {
     console.error(`Unable to Send Message to WhatsApp Message ${error}`);

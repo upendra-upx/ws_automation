@@ -6,9 +6,9 @@
   --_85xfont: calc(0.85 * var(--fontscreensize));
   --_95xfont: calc(0.95 * var(--fontscreensize));
   --1xfont: calc(1 * var(--fontscreensize));
-  --1_25xfont: calc(1.25 * var(--fontscreensize));  
-  --1_5xfont: calc(1.5 * var(--fontscreensize));  
-  --1_75xfont: calc(1.75 * var(--fontscreensize));    
+  --1_25xfont: calc(1.25 * var(--fontscreensize));
+  --1_5xfont: calc(1.5 * var(--fontscreensize));
+  --1_75xfont: calc(1.75 * var(--fontscreensize));
   --2xfont: calc(2 * var(--fontscreensize));
   --2_5xfont: calc(2.5 * var(--fontscreensize));
   --3xfont: calc(3 * var(--fontscreensize));
@@ -52,6 +52,27 @@ body {
   background-color: hsl(207deg 86% 83%);
 }
 
+/* width */
+body::-webkit-scrollbar {
+  width: 6px !important;
+  height: 6px !important;
+}
+
+/* Track */
+body::-webkit-scrollbar-track {
+  background: hsl(0deg 0% 75% / 50%);
+}
+
+/* Handle */
+.chat::-webkit-scrollbar-thumb {
+  background-color: hsl(0deg 0% 15% / 50%);
+}
+
+/* Handle on hover */
+.chat::-webkit-scrollbar-thumb:hover {
+  background: hsl(0deg 0% 5% / 50%);
+}
+
 .application {
   display: flex;
   flex-direction: row;
@@ -73,8 +94,8 @@ body {
 .chat_div {
   display: flex;
   flex-grow: 4;
-  flex-wrap: wrap;
-  padding: var(--1xfont);
+  /* flex-wrap: wrap; */
+  /* padding: var(--1xfont); */
   flex-direction: column;
   background-color: hsl(0deg 0% 97% / 70%);
   box-shadow: 0px 0px 2px 2px rgb(0 0 0 / 20%);
@@ -180,20 +201,55 @@ body {
 }
 
 .chat {
-  list-style: none;
-  display: flex;
-  flex-wrap: wrap;
-  flex-direction: column;
+  /* list-style: none; */
+  /* display: flex; */
+  display: block;
+  /*   flex-wrap: wrap;
+  flex-direction: column; */
   margin: 0;
   border: 0;
-  padding: 0;
+  padding: var(--_5xfont);
   background-color: hsl(40deg 68% 49% / 10%);
   font-family: "Segoe UI";
   font-size: var(--_85xfont);
+  overflow-y: auto;
+  max-height: 85vh;
+}
+
+/* width */
+.chat::-webkit-scrollbar {
+  width: 6px !important;
+  height: 6px !important;
+}
+
+/* Track */
+.chat::-webkit-scrollbar-track {
+  background: hsl(0deg 0% 75% / 50%);
+}
+
+/* Handle */
+.chat::-webkit-scrollbar-thumb {
+  background-color: hsl(0deg 0% 15% / 50%);
+}
+
+/* Handle on hover */
+.chat::-webkit-scrollbar-thumb:hover {
+  background: hsl(0deg 0% 5% / 50%);
+}
+
+.chat:empty {
+  background-color: rgba(0, 0, 0, 0);
 }
 
 .chat_messages {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.chit {
   margin: var(--_25xfont) var(--_25xfont) 0 var(--_25xfont);
   padding: var(--_25xfont) var(--_25xfont) var(--_25xfont) var(--_25xfont);
   background-color: hsl(100, 100%, 100%);
+  border-radius: 7.5px;
 }
