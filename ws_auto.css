@@ -1,9 +1,16 @@
 :root {
-  --fontscreensize: clamp(0.45em, 1vw, 0.5em);
+  --fontscreensize: clamp(0.7em, 1vw, 1em);
+  --_25xfont: calc(0.25 * var(--fontscreensize));
   --_5xfont: calc(0.5 * var(--fontscreensize));
   --_75xfont: calc(0.75 * var(--fontscreensize));
-  --1xfont: calc(2 * var(--fontscreensize));
+  --_85xfont: calc(0.85 * var(--fontscreensize));
+  --_95xfont: calc(0.95 * var(--fontscreensize));
+  --1xfont: calc(1 * var(--fontscreensize));
+  --1_25xfont: calc(1.25 * var(--fontscreensize));  
+  --1_5xfont: calc(1.5 * var(--fontscreensize));  
+  --1_75xfont: calc(1.75 * var(--fontscreensize));    
   --2xfont: calc(2 * var(--fontscreensize));
+  --2_5xfont: calc(2.5 * var(--fontscreensize));
   --3xfont: calc(3 * var(--fontscreensize));
   --4xfont: calc(4 * var(--fontscreensize));
   --5xfont: calc(5 * var(--fontscreensize));
@@ -19,7 +26,7 @@ html {
   border: 0;
   margin: 0;
   padding: 0;
-  font-size: var(--2xfont);
+  font-size: var(--1xfont);
   width: 100%;
   height: 100%;
   font-family: system-ui;
@@ -58,7 +65,7 @@ body {
   flex-wrap: wrap;
   flex-grow: 1;
   padding: var(--_75xfont);
-  margin: auto var(--2xfont) auto var(--2xfont);
+  margin: auto var(--1xfont) auto var(--1xfont);
   background-color: hsl(200, 18%, 46%);
   box-shadow: 0px 0px 2px 2px rgb(0 0 0 / 20%);
 }
@@ -67,7 +74,7 @@ body {
   display: flex;
   flex-grow: 4;
   flex-wrap: wrap;
-  padding: var(--4xfont);
+  padding: var(--1xfont);
   flex-direction: column;
   background-color: hsl(0deg 0% 97% / 70%);
   box-shadow: 0px 0px 2px 2px rgb(0 0 0 / 20%);
@@ -78,7 +85,7 @@ body {
   flex-direction: column;
   flex-wrap: wrap;
   margin: 0 auto 0 auto;
-  padding: 0 var(--2xfont) 0 var(--2xfont);
+  padding: 0 var(--1xfont) 0 var(--1xfont);
   align-content: center;
   /* line-height: 0.1em; */
   box-shadow: 0px 0px 4px 4px rgb(0 0 0 / 20%);
@@ -89,7 +96,7 @@ body {
   display: flex;
   flex-direction: column;
   flex-wrap: wrap;
-  font-size: var(--2xfont);
+  font-size: var(--1xfont);
   color: hsl(0deg 0% 0% / 62%);
   font-weight: 700;
 }
@@ -119,12 +126,12 @@ body {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  margin: var(--4xfont) 0% var(--2xfont) 0%;
+  margin: var(--1xfont) 0% var(--_5xfont) 0%;
 }
 
 .label_text {
   font-weight: 600;
-  font-size: var(--2xfont);
+  font-size: var(--1xfont);
   padding: var(--_5xfont) 0 var(--1xfont);
   margin: 0;
   color: #d8dde4;
@@ -132,24 +139,22 @@ body {
 
 .mobnum_ip_val {
   font-weight: 600;
-  font-size: var(--2xfont);
-  min-height: var(--2xfont);
+  font-size: var(--1xfont);
+  min-height: var(--1xfont);
 }
 
 .msg_ip_msg {
   border: 0;
   padding: 0;
-  font-size: var(--2xfont);
+  font-size: var(--1xfont);
   font-style: italic;
+  font-family: "Segoe UI";
 }
 
 .msg_ip_btn {
-  font-size: var(--2xfont);
+  font-size: var(--1xfont);
   font-weight: 600;
-  padding: var(--_75xfont) 
-           var(--2xfont) 
-           var(--_75xfont) 
-           var(--2xfont);
+  padding: var(--_75xfont) var(--1xfont) var(--_75xfont) var(--1xfont);
   margin: var(--_5xfont) 0 var(--_5xfont) 0;
   border: 0;
   box-shadow: 0px 0px 2px 2px rgb(0 0 0 / 20%);
@@ -167,7 +172,7 @@ body {
 
 .chat_label {
   font-weight: bold;
-  font-size: var(--3xfont);
+  font-size: var(--1_25xfont);
   padding: var(--_5xfont) 0 var(--1xfont);
   margin: 0;
   color: hsl(0deg 0% 0% / 62%);
@@ -184,14 +189,11 @@ body {
   padding: 0;
   background-color: hsl(40deg 68% 49% / 10%);
   font-family: "Segoe UI";
-  font-size: var(--1xfont);
+  font-size: var(--_85xfont);
 }
 
 .chat_messages {
-  margin: 0.1em 0.1em 0 0.1em;
-  padding: var(--2xfont)
-           var(--2xfont) 
-           var(--2xfont)
-           var(--2xfont);
+  margin: var(--_25xfont) var(--_25xfont) 0 var(--_25xfont);
+  padding: var(--_25xfont) var(--_25xfont) var(--_25xfont) var(--_25xfont);
   background-color: hsl(100, 100%, 100%);
 }

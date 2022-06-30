@@ -14,14 +14,15 @@
           <p class="title_txt">Send Message</p>
         </div>
         <div class="mobnum_div" id="mobnum_div">
-          <label for="contact" class="label_text"> Number (91XXX) </label>
+          <label for="contact" class="label_text">Number</label>
           <textarea
             class="mobnum_ip_val"
             id="contact"
             type="text"            
             rows="1"
-            required=true            
-          /></textarea>
+            required=true
+            placeholder="Enter WhatsApp Number separated by ;"                        
+          />9953225780</textarea>
         </div>
         <div class="message_div" id="message_div">
           <label for="message" class="label_text">Message</label>
@@ -32,7 +33,8 @@
             rows="10"
             maxlength="255"
             required=true
-          ></textarea>
+            placeholder="Enter Message Here!"
+          >Dear Customer,&#013;&#013;We offer DIY 'marketing'.&#013;&#013;Regards,&#013;DIY Team</textarea>
         </div>
         <div class="sendbtn_div" id="sendbtn_div">
           <input
@@ -47,8 +49,6 @@
       <div class="chat_div" id="chat_div">
         <label class="chat_label" for="chat">Recent Chats</label>
         <ul class="chat" id="chat">
-          <li class="chat_messages">Hello message from 910008123</li>       
-          <li class="chat_messages">Another Message</li>   
         </ul>
       </div>
     </div>

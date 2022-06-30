@@ -1,6 +1,12 @@
 {
     "configurations": [
         {
+            "command": "npm test",
+            "name": "Run NPM Test",
+            "request": "launch",
+            "type": "node-terminal"
+        },
+        {
             "type": "pwa-msedge",
             "name": "Launch Microsoft Edge",
             "request": "launch",
