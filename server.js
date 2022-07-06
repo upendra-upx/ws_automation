@@ -1,10 +1,17 @@
-const loader = require("./loader");
-const http2 = require("http2");
-const WebSocketServer = require("websocket").server;
-const fs = require("fs");
+require(`dotenv`).config();
 
-const qrcode = require("qrcode-terminal");
-const { Client, LocalAuth } = require("whatsapp-web.js");
+const loader = require(`./loader`);
+const http2 = require(`http2`);
+const WebSocketServer = require(`websocket`).server;
+const fs = require(`fs`);
+
+const qrcode = require(`qrcode-terminal`);
+const { Client, LocalAuth } = require(`whatsapp-web.js`);
+// const { MongoClient, ServerApiVersion }  = require(`mongoose`);
+const mongoose = require(`mongoose`);
+const userSchema = require(`./models/userschema`);
+
+const { v4: uuidv4 } = require("uuid");
 
 const STATUS_YELLOW = 0;
 const STATUS_GREEN = 1;
@@ -20,6 +27,7 @@ const MESSAGE_TYPE_AUTO = 3;
 
 var message_object = {
   timestamp: ``,
+  auth_token: ``,
   function: FUNC_BROADCAST,
   from: FROM_WS_AUTO_SERVER,
   to: ``,
@@ -30,6 +38,7 @@ var message_object = {
 
 function get_message_object(
   timestamp,
+  auth_token,
   func,
   from,
   to,
@@ -39,6 +48,7 @@ function get_message_object(
 ) {
   let msg = message_object;
   msg.timestamp = timestamp;
+  msg.auth_token = auth_token;
   msg.function = func;
   msg.from = from;
   msg.to = to;
@@ -48,8 +58,24 @@ function get_message_object(
   return msg;
 }
 
+const httphostname = "https://localhost";
 const wshostname = "ws://localhost";
-const httpport = "8080";
+
+// const db = new MongoClient(process.env.DATABASE_URL, { useNewUrlParser: true, useUnifiedTopology: true, serverApi: ServerApiVersion.v1 });
+mongoose.connect(process.env.DATABASE_URL, { useNewUrlParser: true });
+
+const db = mongoose.connection;
+
+db.on("error", (error) => onDbError(error));
+db.once("open", () => onDbOpen());
+
+function onDbError(error) {
+  console.error(error);
+}
+
+function onDbOpen() {
+  console.log(`Connected to DB: ${process.env.DATABASE_URL}`);
+}
 
 var ws_simulator;
 var socket_connection;
@@ -66,8 +92,70 @@ http_server.on("connection", (socket) => {
   //console.log(socket);
 });
 
-http_server.on("request", (request, response) => {
-  //console.log(request + response);
+http_server.on("request", async (request, response) => {
+  // console.log(request + response);
+  if (request.headers[`:path`].match(/authenticate/i)) {
+    if (db !== null && db !== undefined) {
+      try {
+        var credentials = JSON.parse(request.headers[`x-authenticate`]);
+        const users = await userSchema.find({
+          mobile: credentials.mobile,
+          password: credentials.password,
+        });
+        if (users !== null && users !== undefined && users !== {}) {
+          let uuid = uuidv4();
+          response.writeHead(200);
+          response.write(uuid);
+          response.end();
+        } else {
+          console.error(`User not found: ${credentials}`);
+          response.writeHead(404);
+          response.end();
+        }
+      } catch (error) {
+        console.error(error);
+        response.writeHead(500);
+        response.end();
+      }
+    }
+  } else if (request.headers[`:path`].match(/signup/i)) {
+    if (db !== null && db !== undefined) {
+      try {
+        var credentials = JSON.parse(request.headers[`x-authenticate`]);
+        const users = await userSchema.find({
+          mobile: credentials.mobile,
+          password: credentials.password,
+        });
+
+        if (users.length == 0) {
+          try {
+            const newuser = new userSchema({
+              mobile: credentials.mobile,
+              password: credentials.password,
+            });
+            const user = await newuser.save();
+            let uuid = uuidv4();
+            response.writeHead(201);
+            response.write(uuid);
+            response.end();
+          } catch (error) {
+            console.error(error);
+            console.error(error);
+            response.writeHead(400);
+            response.end();
+          }
+        } else {
+          response.writeHead(400);
+          response.end();
+        }
+      } catch (error) {
+        console.error(error);
+        response.writeHead(400);
+        response.end();
+      }
+    }
+  } else {
+  }
 });
 
 http_server.on("session", (session) => {
@@ -116,8 +204,8 @@ function on_Socket_Error(error) {
   console.log(`Web Socket error :${error}`);
 }
 
-http_server.listen(httpport, () => {
-  console.log("HTTP Server started on Port: " + httpport);
+http_server.listen(process.env.HTTP_PORT, () => {
+  console.log("HTTP Server started on Port: " + process.env.HTTP_PORT);
 });
 
 function on_Socket_Request(request) {
@@ -230,6 +318,7 @@ function on_WS_Simulator_QR(qr) {
   ws_status_msg = `QR generated!`;
   let msg = get_message_object(
     new Date().toLocaleString(),
+    ``,
     FUNC_BROADCAST,
     FROM_WS_AUTO_SERVER,
     "",
@@ -244,6 +333,7 @@ function on_WS_Simulator_Ready() {
   ws_status_msg = `Connected to WhatsApp!`;
   let msg = get_message_object(
     new Date().toLocaleString(),
+    ``,
     FUNC_BROADCAST,
     FROM_WS_AUTO_SERVER,
     "",
@@ -274,6 +364,7 @@ function on_WS_Simulator_Message(message) {
             contactto.name !== "" ? contactto.name : contactto.number;
           let msg = get_message_object(
             new Date().toLocaleString(),
+            ``,
             FUNC_BROADCAST,
             fromname,
             toname,
@@ -298,7 +389,7 @@ function on_WS_Simulator_Message(message) {
       console.error(`Unable to get 'From' Contact Details: ${error}`);
       return;
     });
-};
+}
 
 function on_WS_Simulator_Message_Create(message) {
   if (message.fromMe == true && !message.body.match(/From Web Auto-Client/)) {
@@ -321,6 +412,7 @@ function on_WS_Simulator_Message_Create(message) {
               contactto.name !== "" ? contactto.name : contactto.number;
             let msg = get_message_object(
               new Date().toLocaleString(),
+              ``,
               FUNC_BROADCAST,
               fromname,
               toname,
@@ -364,7 +456,7 @@ async function getWSChat(contact) {
 
 async function sendWSMessage(chat, message) {
   try {
-    let return_message = await chat.sendMessage(message.replace(/<br>/g,`\n`));
+    let return_message = await chat.sendMessage(message.replace(/<br>/g, `\n`));
     return return_message;
   } catch (error) {
     console.error(`Unable to Send Message to WhatsApp Message ${error}`);

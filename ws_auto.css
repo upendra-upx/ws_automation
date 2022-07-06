@@ -1,52 +1,35 @@
 :root {
-  --fontscreensize: 0.75vw;
+  --fontscreensize: clamp(1em, 0.75vw, 10em);
   /* clamp(0.7em, 2%, 1em); */
-  --_25xfont:
-  calc(0.25 * var(--fontscreensize));
-  --_5xfont:
-  calc(0.5 * var(--fontscreensize));
-  --_75xfont:
-  calc(0.75 * var(--fontscreensize));
-  --_85xfont:
-  calc(0.85 * var(--fontscreensize));
-  --_95xfont:
-  calc(0.95 * var(--fontscreensize));
-  --1xfont:
-  calc(1 * var(--fontscreensize));
-  --1_25xfont:
-  calc(1.25 * var(--fontscreensize));
-  --1_5xfont:
-  calc(1.5 * var(--fontscreensize));
-  --1_75xfont:
-  calc(1.75 * var(--fontscreensize));
-  --2xfont:
-  calc(2 * var(--fontscreensize));
-  --2_5xfont:
-  calc(2.5 * var(--fontscreensize));
-  --3xfont:
-  calc(3 * var(--fontscreensize));
-  --4xfont:
-  calc(4 * var(--fontscreensize));
-  --5xfont:
-  calc(5 * var(--fontscreensize));
-  --6xfont:
-  calc(6 * var(--fontscreensize));
-  --7xfont:
-  calc(7 * var(--fontscreensize));
-  --8xfont:
-  calc(8 * var(--fontscreensize));
-  --9xfont:
-  calc(9 * var(--fontscreensize));
-  --10xfont:
-  calc(10 * var(--fontscreensize));
-  --loginbackgroundcolor:
-  hsl(0,75%,75%);
-  --basecolor:
-  hsl(0,85%,65%);
-  --basehovercolor:
-  hsl(0,75%,75%);
-  --baseactivecolor:
-  hsl(0,65%,85%);
+  --_25xfont: calc(0.25 * var(--fontscreensize));
+  --_5xfont: calc(0.5 * var(--fontscreensize));
+  --_75xfont: calc(0.75 * var(--fontscreensize));
+  --_85xfont: calc(0.85 * var(--fontscreensize));
+  --_95xfont: calc(0.95 * var(--fontscreensize));
+  --1xfont: calc(1 * var(--fontscreensize));
+  --1_25xfont: calc(1.25 * var(--fontscreensize));
+  --1_5xfont: calc(1.5 * var(--fontscreensize));
+  --1_75xfont: calc(1.75 * var(--fontscreensize));
+  --2xfont: calc(2 * var(--fontscreensize));
+  --2_5xfont: calc(2.5 * var(--fontscreensize));
+  --3xfont: calc(3 * var(--fontscreensize));
+  --4xfont: calc(4 * var(--fontscreensize));
+  --5xfont: calc(5 * var(--fontscreensize));
+  --6xfont: calc(6 * var(--fontscreensize));
+  --7xfont: calc(7 * var(--fontscreensize));
+  --8xfont: calc(8 * var(--fontscreensize));
+  --9xfont: calc(9 * var(--fontscreensize));
+  --10xfont: calc(10 * var(--fontscreensize));
+  --15xfont: calc(15 * var(--fontscreensize));
+  --20xfont: calc(20 * var(--fontscreensize));
+  --30xfont: calc(30 * var(--fontscreensize));
+  --40xfont: calc(40 * var(--fontscreensize));
+  --50xfont: calc(50 * var(--fontscreensize));
+  --60xfont: calc(60 * var(--fontscreensize));
+  --loginbackgroundcolor: hsl(0deg 70% 70% / 75%);
+  --basecolor: hsl(0, 85%, 65%);
+  --basehovercolor: hsl(0, 75%, 75%);
+  --baseactivecolor: hsl(0, 65%, 85%);
   --appopacity: 0.2;
 }
 
@@ -107,7 +90,7 @@ body::-webkit-scrollbar-track {
   flex-direction: row;
   flex-wrap: wrap;
   width: 100%;
-  /* opacity: var(--appopacity); */
+  opacity: var(--appopacity);
 }
 
 .login {
@@ -293,31 +276,104 @@ body::-webkit-scrollbar-track {
   border-radius: 7.5px;
 }
 
-.login_form{
+.login_form {
   display: flex;
   flex-direction: column;
   flex-wrap: wrap;
   justify-content: center;
-  margin:auto;
+  margin: auto;
   background-color: var(--loginbackgroundcolor);
-  padding: var(--5xfont);
-
+  padding: var(--1xfont);
+  border-radius: 10px;
+  align-content: center;
+  align-items: center;
 }
 
-.login_items{
-  line-height: var(--2xfont);
-  border:0;
+.login_items {
+  display: flex;
+  flex-direction: row;
+  /* line-height: var(--2xfont); */
+  border: 0;
+  /* padding: var(--5xfont); */
+  font-size: var(--1xfont);
+  flex-wrap: wrap;
+  align-content: center;
+  border-radius: 2.5px;
 }
 
-.username_label{
+.login_banner {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-content: center;
+  justify-content: center;
+  font-size: var(--1_5xfont);
+  color: hsl(0deg 0% 97%);
+  font-weight: 600;
+  background-color: #00c5b2;
+  padding: var(--_85xfont);
+  margin: var(--_85xfont);
+}
+
+.username_label {
   font-weight: 700;
+  padding: var(--1xfont) var(--1xfont) var(--1xfont) 0;
+  display: none;
 }
 
-.password_label{
+.password_label {
   font-weight: 700;
+  padding: 0 var(--1xfont) var(--1xfont) 0;
+  display: none;
 }
 
-.login_button{
-  font-weight: 900;
-  margin: var(--1xfont) 0 0 0;
+.username {
+  font-size: var(--1xfont);
+  width: var(--15xfont);
+  height: var(--2xfont);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica,
+    Arial, sans-serif;
+  margin: var(--1xfont) 0 var(--_5xfont) 0;
+}
+
+.password {
+  font-size: var(--1xfont);
+  width: var(--15xfont);
+  height: var(--2xfont);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica,
+    Arial, sans-serif;
+}
+
+.buttons {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  flex-wrap: wrap;
+  align-content: center;
+  justify-content: center;
+  align-items: center;
+}
+
+.login_button {  
+  justify-content: center;
+  font-weight: 600;
+  margin: var(--2xfont) auto auto auto;
+  padding: var(--_5xfont);
+  border: 0;
+  width: 25%;
+  border-radius: 5px;
+  color: hsl(100, 100%, 100%, 1);
+  background-color: hsl(0, 50%, 50%, 1);
+}
+
+.signup_button {
+  justify-content: center;  
+  font-weight: 600;
+  margin: var(--2xfont) auto auto auto;
+  padding: var(--_5xfont);
+  border: 0;
+  width: 25%;
+  border-radius: 5px;
+  color: hsl(100, 100%, 100%, 1);
+  background-color: #4caf50;
 }
