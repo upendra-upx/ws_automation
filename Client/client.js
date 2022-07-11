@@ -40,10 +40,31 @@ function displayMessage(message, style) {
 }
 
 window.onload = function () {
-  document.getElementById("login_button").addEventListener("click", Authenticate);
+  document
+    .getElementById("login_button")
+    .addEventListener("click", Authenticate);
   document.getElementById("signup_button").addEventListener("click", SignUp);
   document.getElementById("msg_ip_btn").addEventListener("click", SendMsg);
+  document.getElementById("open_eye").style.display = `block`;
+  document.getElementById("closed_eye").style.display = `none`;
+  document.getElementById("open_eye").addEventListener("click", togglePasswordEye);
+  document.getElementById("closed_eye").addEventListener("click", togglePasswordEye);
 };
+
+function togglePasswordEye() {
+  var open_eye = document.getElementById("open_eye");
+  var closed_eye = document.getElementById("closed_eye");
+  var password = document.getElementById("password");
+  if (open_eye.style.display == `block`) {
+    open_eye.style.display = `none`;
+    closed_eye.style.display = `block`;
+    password.type = "text";
+  } else {
+    open_eye.style.display = `block`;
+    closed_eye.style.display = `none`;
+    password.type = "password";
+  }
+}
 
 function Authenticate() {
   var username = document.getElementById("username").value;
@@ -70,39 +91,43 @@ function Authenticate() {
   AuthHeaders.append("Content-Length", credentialsString.length.toString());
   AuthHeaders.append("x-authenticate", `${credentialsString}`);
 
-  const AuthRequest = new Request(
-    `https://diytests.ddns.net:8080/authenticate`,
-    {
-      method: "GET",
-      headers: AuthHeaders,
-      mode: "cors",
-      cache: "default",
-    }
-  );
+  const AuthRequest = new Request(`https://diytests.ddns.net/authenticate`, {
+    method: "GET",
+    headers: AuthHeaders,
+    mode: "cors",
+    cache: "default",
+  });
 
   fetch(AuthRequest)
     .then((response) => onAuthenticateResponse(response))
-    .then((data) => console.log(data));
+    .then((auth_token) => startConnection(auth_token));
 }
 
 function onAuthenticateResponse(response) {
   if (response.ok) {
-    auth_token = response.body;
-
-    socket = new WebSocket("wss://diytests.ddns.net:8080");
-
-    socket.onopen = (event) => onSocketOpen(event);
-
-    socket.onmessage = (message) => onSocketMessage(message);
-
-    socket.onclose = (event) => onSocketClose(event);
-
-    socket.onerror = (error) => onSocketError(error);
-
-    toggleLoginPopup();
+    return response.text();
   } else {
     console.error(`Error in Authenticating: ${response.status}`);
+    throw "Error in Authenticating";
   }
+}
+
+function startConnection(auth_token) {
+  console.log(auth_token);
+
+  let cookie = { "x-csrf": auth_token };
+
+  document.cookie = JSON.stringify(cookie);
+
+  socket = new WebSocket("wss://diytests.ddns.net:443");
+
+  socket.onopen = (event) => onSocketOpen(event);
+
+  socket.onmessage = (message) => onSocketMessage(message);
+
+  socket.onclose = (event) => onSocketClose(event);
+
+  socket.onerror = (error) => onSocketError(error);
 }
 
 function toggleLoginPopup() {
@@ -113,9 +138,13 @@ function toggleLoginPopup() {
     application.style.opacity = 1;
     login.style.display = `none`;
   } else {
+    var application = document.getElementById(`application`);
+    var login = document.getElementById(`login`);
+
+    application.style.opacity = 0.5;
+    login.style.display = `flex`;
   }
 }
-
 
 function SignUp() {
   var username = document.getElementById("username").value;
@@ -142,38 +171,24 @@ function SignUp() {
   SignUpHeaders.append("Content-Length", credentialsString.length.toString());
   SignUpHeaders.append("x-authenticate", `${credentialsString}`);
 
-  const SignUpRequest = new Request(
-    `https://diytests.ddns.net:8080/signup`,
-    {
-      method: "POST",
-      headers: SignUpHeaders,
-      mode: "cors",
-      cache: "default",
-    }
-  );
+  const SignUpRequest = new Request(`https://diytests.ddns.net/signup`, {
+    method: "POST",
+    headers: SignUpHeaders,
+    mode: "cors",
+    cache: "default",
+  });
 
   fetch(SignUpRequest)
     .then((response) => onSignupResponse(response))
-    .then((data) => console.log(data));
+    .then((auth_token) => startConnection(auth_token));
 }
 
 function onSignupResponse(response) {
   if (response.ok) {
-    auth_token = response.body;
-
-    socket = new WebSocket("wss://diytests.ddns.net:8080");
-
-    socket.onopen = (event) => onSocketOpen(event);
-
-    socket.onmessage = (message) => onSocketMessage(message);
-
-    socket.onclose = (event) => onSocketClose(event);
-
-    socket.onerror = (error) => onSocketError(error);
-
-    toggleLoginPopup();
+    auth_token = response.text();
   } else {
     console.error(`Error in Sign Up: ${response.status}`);
+    throw "Error in Sign Up";
   }
 }
 
@@ -203,6 +218,7 @@ function SendMsg() {
 
 function onSocketOpen(event) {
   console.log("[WebSocket] Connection established");
+  toggleLoginPopup();
 }
 
 function onSocketMessage(message) {

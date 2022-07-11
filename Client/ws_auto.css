@@ -20,6 +20,8 @@
   --8xfont: calc(8 * var(--fontscreensize));
   --9xfont: calc(9 * var(--fontscreensize));
   --10xfont: calc(10 * var(--fontscreensize));
+  --12xfont: calc(12 * var(--fontscreensize));
+  --13xfont: calc(13 * var(--fontscreensize));
   --15xfont: calc(15 * var(--fontscreensize));
   --20xfont: calc(20 * var(--fontscreensize));
   --30xfont: calc(30 * var(--fontscreensize));
@@ -202,6 +204,7 @@ body::-webkit-scrollbar-track {
   border: 0;
   box-shadow: 0px 0px 2px 2px rgb(0 0 0 / 20%);
   background-color: var(--basecolor);
+  cursor: pointer;
 }
 
 .msg_ip_btn:hover {
@@ -336,6 +339,11 @@ body::-webkit-scrollbar-track {
   margin: var(--1xfont) 0 var(--_5xfont) 0;
 }
 
+.password_div{
+  display: inline-block;
+  position: relative;
+}
+
 .password {
   font-size: var(--1xfont);
   width: var(--15xfont);
@@ -343,6 +351,23 @@ body::-webkit-scrollbar-track {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica,
     Arial, sans-serif;
 }
+
+.password_eye{
+  cursor: pointer;
+  right: 0px;
+  bottom: 0px;
+  width: var(--1xfont);
+  height: var(--2xfont);
+  position: absolute;
+}
+
+/* .closed_eye{
+  display: none;
+}
+
+.open_eye{
+  display: block;
+} */
 
 .buttons {
   display: flex;
@@ -364,6 +389,7 @@ body::-webkit-scrollbar-track {
   border-radius: 5px;
   color: hsl(100, 100%, 100%, 1);
   background-color: hsl(0, 50%, 50%, 1);
+  cursor: pointer;
 }
 
 .signup_button {
@@ -376,4 +402,5 @@ body::-webkit-scrollbar-track {
   border-radius: 5px;
   color: hsl(100, 100%, 100%, 1);
   background-color: #4caf50;
+  cursor: pointer;
 }
