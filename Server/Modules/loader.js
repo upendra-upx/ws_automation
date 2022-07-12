@@ -1,3 +1,5 @@
+'use strict';
+
 const userSchema = require(`../../Models/userschema`);
 const active_users = require(`./active_users`);
 const { v4: uuidv4 } = require("uuid");
@@ -65,7 +67,7 @@ async function route(request, response, db, get_message_object, ws_broadcast_mes
           });
           if (dbusers?.length == 1) {
               // Check existing Active Users with this Mobile Number.
-              let users = active_users.get_active_userlist_by_mobile(
+              let users = active_users.active_users.get_active_userlist_by_mobile(
                 credentials.mobile
               );
 
@@ -74,9 +76,10 @@ async function route(request, response, db, get_message_object, ws_broadcast_mes
               if (users == undefined || users == null) {
                 // If No Active User
                 let auth_token = uuidv4();
-                active_users.add_user(mobile, auth_token, get_message_object, ws_broadcast_message);
+                active_users.active_users.add_user(credentials.mobile, auth_token, get_message_object, ws_broadcast_message);
                 response.write(auth_token);
               } else {
+                active_users.active_users.add_user(credentials.mobile, users[0].auth_token, get_message_object, ws_broadcast_message);                
                 response.write(users[0].auth_token);
               }
 
@@ -111,7 +114,7 @@ async function route(request, response, db, get_message_object, ws_broadcast_mes
               });
               const dbuser = await newdbuser.save();
               // Check existing Active Users with this Mobile Number.
-              let users = active_users.get_active_userlist_by_mobile(
+              let users = active_users.active_users.get_active_userlist_by_mobile(
                 credentials.mobile
               );
 
@@ -120,9 +123,10 @@ async function route(request, response, db, get_message_object, ws_broadcast_mes
               if (users == undefined || users == null) {
                 // If No Active User
                 let auth_token = uuidv4();
-                active_users.add_user(mobile, auth_token, get_message_object, ws_broadcast_message);
+                active_users.active_users.add_user(credentials.mobile, auth_token, get_message_object, ws_broadcast_message);
                 response.write(auth_token);
               } else {
+                active_users.active_users.add_user(credentials.mobile, users[0].auth_token, get_message_object, ws_broadcast_message);                       
                 response.write(users[0].auth_token);
               }
 

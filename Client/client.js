@@ -1,10 +1,12 @@
+"use strict";
+
 const STATUS_YELLOW = 0;
 const STATUS_GREEN = 1;
 const STATUS_RED = 2;
 const FUNC_SEND = `SEND_WS_MESSAGE`;
 const FUNC_BROADCAST = `BROADCAST`;
-const FROM_WS_AUTO_CLIENT = `From Web Auto-Client`;
-const FROM_WS_AUTO_SERVER = `From Web Auto-Server`;
+const FROM_WS_AUTO_CLIENT = `Web Auto-Client`;
+const FROM_WS_AUTO_SERVER = `Web Auto-Server`;
 const MESSAGE_TYPE_CHAT = 0;
 const MESSAGE_TYPE_STATUS = 1;
 const MESSAGE_TYPE_GROUP = 2;
@@ -23,7 +25,7 @@ var message_object = {
 
 var socket;
 var loginstate = true;
-var auth_token;
+var gv_auth_token;
 
 function displayMessage(message, style) {
   var chat = document.getElementById("chat");
@@ -40,15 +42,34 @@ function displayMessage(message, style) {
 }
 
 window.onload = function () {
-  document
+  document.body.addEventListener("submit", (event) => {
+    event.preventDefault();
+    switch (event.submitter.id) {
+      case `login_button`:
+        Authenticate(event, window);
+        break;
+      case `signup_button`:
+        SignUp(event, window);
+        break;
+    }
+  });
+  /* document
     .getElementById("login_button")
-    .addEventListener("click", Authenticate);
-  document.getElementById("signup_button").addEventListener("click", SignUp);
-  document.getElementById("msg_ip_btn").addEventListener("click", SendMsg);
+    .addEventListener("click", (event) => Authenticate(event, window));
+  document
+    .getElementById("signup_button")
+    .addEventListener("click", (event) => SignUp(event, window)); */
+  document
+    .getElementById("msg_ip_btn")
+    .addEventListener("click", (event) => SendMsg(event, window));
   document.getElementById("open_eye").style.display = `block`;
   document.getElementById("closed_eye").style.display = `none`;
-  document.getElementById("open_eye").addEventListener("click", togglePasswordEye);
-  document.getElementById("closed_eye").addEventListener("click", togglePasswordEye);
+  document
+    .getElementById("open_eye")
+    .addEventListener("click", togglePasswordEye);
+  document
+    .getElementById("closed_eye")
+    .addEventListener("click", togglePasswordEye);
 };
 
 function togglePasswordEye() {
@@ -66,7 +87,7 @@ function togglePasswordEye() {
   }
 }
 
-function Authenticate() {
+function Authenticate(event, window) {
   var username = document.getElementById("username").value;
   var password = document.getElementById("password").value;
 
@@ -100,7 +121,7 @@ function Authenticate() {
 
   fetch(AuthRequest)
     .then((response) => onAuthenticateResponse(response))
-    .then((auth_token) => startConnection(auth_token));
+    .then((auth_token) => startConnection(auth_token, window));
 }
 
 function onAuthenticateResponse(response) {
@@ -112,41 +133,7 @@ function onAuthenticateResponse(response) {
   }
 }
 
-function startConnection(auth_token) {
-  console.log(auth_token);
-
-  let cookie = { "x-csrf": auth_token };
-
-  document.cookie = JSON.stringify(cookie);
-
-  socket = new WebSocket("wss://diytests.ddns.net:443");
-
-  socket.onopen = (event) => onSocketOpen(event);
-
-  socket.onmessage = (message) => onSocketMessage(message);
-
-  socket.onclose = (event) => onSocketClose(event);
-
-  socket.onerror = (error) => onSocketError(error);
-}
-
-function toggleLoginPopup() {
-  if ((loginstate = true)) {
-    var application = document.getElementById(`application`);
-    var login = document.getElementById(`login`);
-
-    application.style.opacity = 1;
-    login.style.display = `none`;
-  } else {
-    var application = document.getElementById(`application`);
-    var login = document.getElementById(`login`);
-
-    application.style.opacity = 0.5;
-    login.style.display = `flex`;
-  }
-}
-
-function SignUp() {
+function SignUp(event, window) {
   var username = document.getElementById("username").value;
   var password = document.getElementById("password").value;
 
@@ -180,40 +167,81 @@ function SignUp() {
 
   fetch(SignUpRequest)
     .then((response) => onSignupResponse(response))
-    .then((auth_token) => startConnection(auth_token));
+    .then((auth_token) => startConnection(auth_token, window));
 }
 
 function onSignupResponse(response) {
   if (response.ok) {
-    auth_token = response.text();
+    return response.text();
   } else {
     console.error(`Error in Sign Up: ${response.status}`);
     throw "Error in Sign Up";
   }
 }
 
-function SendMsg() {
+function startConnection(auth_token, window) {
+  //console.log(auth_token);
+
+  if (auth_token !== undefined || auth_token !== null || auth_token !== ``) {
+    window.gv_auth_token = auth_token;
+
+    history.replaceState(history.state, 'Authenticate')
+
+    let cookie = `x-csrf=${auth_token}`;
+
+    document.cookie = cookie;
+
+    socket = new WebSocket("wss://diytests.ddns.net:443");
+
+    socket.onopen = (event) => onSocketOpen(event);
+
+    socket.onmessage = (message) => onSocketMessage(message);
+
+    socket.onclose = (event) => onSocketClose(event);
+
+    socket.onerror = (error) => onSocketError(error);
+  }
+}
+
+function toggleLoginPopup() {
+  if ((loginstate = true)) {
+    var application = document.getElementById(`application`);
+    var login = document.getElementById(`login`);
+
+    application.style.opacity = 1;
+    login.style.display = `none`;
+  } else {
+    var application = document.getElementById(`application`);
+    var login = document.getElementById(`login`);
+
+    application.style.opacity = 0.5;
+    login.style.display = `flex`;
+  }
+}
+
+function SendMsg(event, window) {
   var message_2_send_to = document.getElementById("contact").value;
   var message_2_send = document.getElementById("message").value;
   message_2_send = message_2_send.replace(/[\n\r]/g, "<br>");
-  //message_2_send = `"From Web Auto" To ${message_2_send_to} - ${message_2_send}`;
+  let multi_send_to = message_2_send_to.split(`;`);
+  multi_send_to.forEach((currentValue) => {
+    message_object.timestamp = new Date().toLocaleString();
+    message_object.auth_token = window.gv_auth_token;
+    message_object.to = currentValue;
+    message_object.message_type = MESSAGE_TYPE_CHAT;
+    message_object.message = message_2_send;
 
-  message_object.timestamp = new Date().toLocaleString();
-  message_object.auth_token = auth_token;
-  message_object.to = message_2_send_to;
-  message_object.message_type = MESSAGE_TYPE_CHAT;
-  message_object.message = message_2_send;
-
-  if (
-    socket !== undefined &&
-    socket !== null &&
-    socket.readyState !== 2 &&
-    socket.readyState !== 3 &&
-    message_2_send_to !== "" &&
-    message_2_send !== ""
-  ) {
-    socket.send(JSON.stringify(message_object));
-  }
+    if (
+      socket !== undefined &&
+      socket !== null &&
+      socket.readyState !== 2 &&
+      socket.readyState !== 3 &&
+      message_2_send_to !== "" &&
+      message_2_send !== ""
+    ) {
+      socket.send(JSON.stringify(message_object));
+    }
+  });
 }
 
 function onSocketOpen(event) {
@@ -258,7 +286,7 @@ function onSocketMessage(message) {
   if (msg.message_type == MESSAGE_TYPE_STATUS) {
     htmlmsg = `<span style="color: ${timecolor}; font-weight: 500">${msg.timestamp}</span>- <b><span style="color: hsl(300, 100%, 50%)">'Status Update'</span></b> from <b><span style="color: ${fromcolor}">'${msg.from}'</span></b>:<br>${msg.message}`;
   } else {
-    htmlmsg = `<span style="color: ${timecolor}; font-weight: 500">${msg.timestamp}</span>- <b><span style="color: ${fromcolor}">'${msg.from}'</span></b> to <b>'${msg.to}'</b>:<br>${msg.message}`;
+    htmlmsg = `<span style="color: ${timecolor}; font-weight: 500">${msg.timestamp}</span>- From <b><span style="color: ${fromcolor}">'${msg.from}'</span></b> to <b>'${msg.to}'</b>:<br>${msg.message}`;
   }
   displayMessage(htmlmsg, style);
 }

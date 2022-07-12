@@ -1,6 +1,8 @@
+'use strict';
+
 const ws_web_auto = require("./ws_web_auto");
 
-module.exports = class active_users {
+exports.active_users = class active_users {
   static users = [];
   static ws_broadcast_message;
   static get_message_object;
@@ -8,11 +10,11 @@ module.exports = class active_users {
   static add_user(mobile, auth_token, get_message_object, ws_broadcast_message, socket_connection = undefined) {
     this.ws_broadcast_message = ws_broadcast_message;
     this.get_message_object = get_message_object;
-    let userlist = get_active_userlist_by_mobile(mobile);
+    let userlist = this.get_active_userlist_by_mobile(mobile);
 
     if (userlist == undefined || userlist == null) {
-      let ws_instance = new ws_web_auto(mobile, get_message_object, ws_broadcast_message);
-      users.push({
+      let ws_instance = new ws_web_auto.ws_web_auto(mobile, get_message_object, ws_broadcast_message);
+      this.users.push({
         mobile: mobile,
         auth_token: auth_token,
         socket_connection: socket_connection,
@@ -24,12 +26,12 @@ module.exports = class active_users {
     } else {
       let found = 0;
       for (let i = 0; i < userlist.length; i++) {
-        if (userlist[i].socket_connection == socket_connection) {
+        if (userlist[i].socket_connection?.id == socket_connection?.id) {
           found++;
         }
       }
       if (found == 0) {
-        users.push({
+        this.users.push({
           mobile: mobile,
           auth_token: auth_token,
           socket_connection: socket_connection,
@@ -38,12 +40,15 @@ module.exports = class active_users {
         console.log(
           `Added Active User with Mobile-${mobile}, Auth Token-${auth_token}, Socket Connection-${socket_connection}, WS Web Instance-${userlist[0].ws_web_auto_instance}`
         );
+      } else{
+        console.log(`Error - User Already Exist with with Mobile-${mobile}, Auth Token-${auth_token}, Socket Connection-${socket_connection}, WS Web Instance-${userlist[0].ws_web_auto_instance}`);
+        throw `Error - User Already Exist with with Mobile-${mobile}, Auth Token-${auth_token}, Socket Connection-${socket_connection}, WS Web Instance-${userlist[0].ws_web_auto_instance}`;        
       }
     }
   }
   static destroy_ws_simulator(mobile, ws_simulator_instance) {
     let found = 0;
-    for (let user in users) {
+    for (let user in this.users) {
       if (user.mobile == mobile) {
         found++;
       }
@@ -56,63 +61,63 @@ module.exports = class active_users {
 
   static remove_user_by_mobile(mobile) {
     let lastuser;
-    for (let i = 0; i < users.length; i++) {
-      if (users[i].mobile == mobile)
+    for (let i = 0; i < this.users.length; i++) {
+      if (this.users[i].mobile == mobile)
         console.log(
-          `Removing Active User with Mobile-${users[i].mobile}, Auth Token-${users[i].auth_token}, Socket Connection-${users[i].socket_connection}, WS Web Instance-${users[i].ws_web_auto_instance}`
+          `Removing Active User with Mobile-${this.users[i].mobile}, Auth Token-${this.users[i].auth_token}, Socket Connection-${this.users[i].socket_connection}, WS Web Instance-${this.users[i].ws_web_auto_instance}`
         );
-      lastuser = users[i];
-      users.splice(i, 1);
+      lastuser = this.users[i];
+      this.users.splice(i, 1);
     }
-    destroy_ws_simulator(mobile, lastuser.ws_web_auto_instance);
+    this.destroy_ws_simulator(mobile, lastuser.ws_web_auto_instance);
   }
   static remove_user_by_auth_token(auth_token) {
     let lastuser;
-    for (let i = 0; i < users.length; i++) {
-      if (users[i].auth_token == auth_token)
+    for (let i = 0; i < this.users.length; i++) {
+      if (this.users[i].auth_token == auth_token)
         console.log(
-          `Removing Active User with Mobile-${users[i].mobile}, Auth Token-${users[i].auth_token}, Socket Connection-${users[i].socket_connection}, WS Web Instance-${users[i].ws_web_auto_instance}`
+          `Removing Active User with Mobile-${this.users[i].mobile}, Auth Token-${this.users[i].auth_token}, Socket Connection-${this.users[i].socket_connection}, WS Web Instance-${this.users[i].ws_web_auto_instance}`
         );
-      lastuser = users[i];
-      users.splice(i, 1);
+      lastuser = this.users[i];
+      this.users.splice(i, 1);
     }
-    destroy_ws_simulator(lastuser.mobile, lastuser.ws_web_auto_instance);
+    this.destroy_ws_simulator(lastuser.mobile, lastuser.ws_web_auto_instance);
   }
   static remove_user_by_socket(socket_connection) {
     let lastuser;
-    for (let i = 0; i < users.length; i++) {
-      if (users[i].socket_connection == socket_connection)
+    for (let i = 0; i < this.users.length; i++) {
+      if (this.users[i].socket_connection?.id == socket_connection?.id)
         console.log(
-          `Removing Active User with Mobile-${users[i].mobile}, Auth Token-${users[i].auth_token}, Socket Connection-${users[i].socket_connection}, WS Web Instance-${users[i].ws_web_auto_instance}`
+          `Removing Active User with Mobile-${this.users[i].mobile}, Auth Token-${this.users[i].auth_token}, Socket Connection-${this.users[i].socket_connection}, WS Web Instance-${this.users[i].ws_web_auto_instance}`
         );
-      lastuser = users[i];
-      users.splice(i, 1);
+      lastuser = this.users[i];
+      this.users.splice(i, 1);
     }
-    destroy_ws_simulator(lastuser.mobile, lastuser.ws_web_auto_instance);
+    this.destroy_ws_simulator(lastuser.mobile, lastuser.ws_web_auto_instance);
   }
   static update_socket_conn_by_auth_token(auth_token, socket_connection) {
-    for (let i = 0; i < users.length; i++) {
+    for (let i = 0; i < this.users.length; i++) {
       if (
-        users[i].auth_token == auth_token &&
-        users[i].socket_connection == undefined
+        this.users[i].auth_token == auth_token &&
+        this.users[i].socket_connection == undefined
       ) {
         console.log(
-          `Updating Socket Connection for Active User with Mobile-${users[i].mobile}, Auth Token-${users[i].auth_token}, Socket Connection-${users[i].socket_connection}, WS Web Instance-${users[i].ws_web_auto_instance}`
+          `Updating Socket Connection for Active User with Mobile-${this.users[i].mobile}, Auth Token-${this.users[i].auth_token}, Socket Connection-${socket_connection}, WS Web Instance-${this.users[i].ws_web_auto_instance}`
         );
-        users[i].socket_connection == socket_connection;
+        this.users[i].socket_connection = socket_connection;
       }
     }
   }
   static update_ws_instance_by_auth_token(auth_token, ws_web_auto_instance) {
-    for (let i = 0; i < users.length; i++) {
+    for (let i = 0; i < this.users.length; i++) {
       if (
-        users[i].auth_token == auth_token &&
-        users[i].ws_web_auto_instance == undefined
+        this.users[i].auth_token == auth_token &&
+        this.users[i].ws_web_auto_instance == undefined
       ) {
         console.log(
-          `Updating WS Web Auto Instance for Active User with Mobile-${users[i].mobile}, Auth Token-${users[i].auth_token}, Socket Connection-${users[i].socket_connection}, WS Web Instance-${users[i].ws_web_auto_instance}`
+          `Updating WS Web Auto Instance for Active User with Mobile-${this.users[i].mobile}, Auth Token-${this.users[i].auth_token}, Socket Connection-${this.users[i].socket_connection}, WS Web Instance-${this.users[i].ws_web_auto_instance}`
         );
-        users[i].ws_web_auto_instance == ws_web_auto_instance;
+        this.users[i].ws_web_auto_instance = ws_web_auto_instance;
       }
     }
   }
@@ -129,9 +134,9 @@ module.exports = class active_users {
   }
   static get_active_userlist_by_auth_token(auth_token) {
     let userlist = [];
-    for (let i = 0; i < users.length; i++) {
-      if (users[i].auth_token == auth_token) {
-        userlist.push(users[i]);
+    for (let i = 0; i < this.users.length; i++) {
+      if (this.users[i].auth_token == auth_token) {
+        userlist.push(this.users[i]);
       }
     }
     if (userlist.length !== 0) {
@@ -139,9 +144,9 @@ module.exports = class active_users {
     }
   }
   static get_active_user_by_socket(socket_connection) {
-    for (let i = 0; i < users.length; i++) {
-      if (users[i].socket_connection == socket_connection) {
-        return users[i].socket_connection;
+    for (let i = 0; i < this.users.length; i++) {
+      if (this.users[i].socket_connection?.id == socket_connection?.id) {
+        return this.users[i];
       }
     }
   }

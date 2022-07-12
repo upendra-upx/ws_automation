@@ -1,3 +1,5 @@
+"use strict";
+
 require(`dotenv`).config();
 
 const loader = require(`./Modules/loader`);
@@ -9,14 +11,13 @@ const fs = require(`fs`);
 const mongoose = require(`mongoose`);
 const active_users = require(`./Modules/active_users`);
 
-
 const STATUS_YELLOW = 0;
 const STATUS_GREEN = 1;
 const STATUS_RED = 2;
 const FUNC_SEND = `SEND_WS_MESSAGE`;
 const FUNC_BROADCAST = `BROADCAST`;
-const FROM_WS_AUTO_CLIENT = `From Web Auto-Client`;
-const FROM_WS_AUTO_SERVER = `From Web Auto-Server`;
+const FROM_WS_AUTO_CLIENT = `Web Auto-Client`;
+const FROM_WS_AUTO_SERVER = `Web Auto-Server`;
 const MESSAGE_TYPE_CHAT = 0;
 const MESSAGE_TYPE_STATUS = 1;
 const MESSAGE_TYPE_GROUP = 2;
@@ -90,8 +91,10 @@ function onDbOpen() {
 var ws_status_msg;
 
 const http_server = http2.createSecureServer({
-  key: fs.readFileSync("./Server/certificates/localhost-private.pem"),
-  cert: fs.readFileSync("./Server/certificates/localhost-cert.pem"),
+  key: fs.readFileSync(`./Server/certificates/privkey.pem`),
+  // key: fs.readFileSync(`./Server/certificates/localhost-private.pem`),
+  cert: fs.readFileSync(`./Server/certificates/fullchain.pem`),
+  // cert: fs.readFileSync("./Server/certificates/localhost-cert.pem"),
   origins: "*",
   allowHTTP1: true,
 });
@@ -144,12 +147,12 @@ socket_server.on("upgradeError", (error) => {
 
 function on_Socket_Close(socket_connection, reasonCode, description) {
   console.log(`Web Socket closed :${reasonCode} - ${description} `);
-  active_users.remove_user_by_socket(socket_connection);
+  active_users.active_users.remove_user_by_socket(socket_connection);
 }
 
 function on_Socket_Error(socket_connection, error) {
   console.log(`Web Socket error :${error}`);
-  active_users.remove_user_by_socket(socket_connection);
+  active_users.active_users.remove_user_by_socket(socket_connection);
 }
 
 http_server.listen(process.env.HTTP_PORT, () => {
@@ -157,25 +160,42 @@ http_server.listen(process.env.HTTP_PORT, () => {
 });
 
 function on_Socket_Request(request) {
-  let socket_connection = request.accept(null, request.origin);
-  let cookie = JSON.parse(request.cookie);
-  active_users.update_socket_conn_by_auth_token(
-    cookie[`x-csrf`],
-    socket_connection
-  );
-  socket_connection.on("message", (socket_connection, message) =>
-    on_Message_From_Client(socket_connection, message)
-  );
-  socket_connection.on("close", (socket_connection, reasonCode, description) =>
-    on_Socket_Close(socket_connection, reasonCode, description)
-  );
-  socket_connection.on("error", (socket_connection, error) =>
-    on_Socket_Error(socket_connection, error)
-  );
+  for (let i = 0; i < request.cookies.length; i++) {
+    let csrf_cookie = request.cookies[i];
+    if (csrf_cookie.name == `x-csrf`) {
+      let auth_token = csrf_cookie.value;
+      if (auth_token !== null) {
+        let socket_connection = request.accept(null, request.origin);
+        socket_connection.id = new Date().toLocaleString();
+        active_users.active_users.update_socket_conn_by_auth_token(
+          auth_token,
+          socket_connection
+        );
+        socket_connection.on("message", (message) =>
+          on_Message_From_Client(socket_connection, message)
+        );
+        socket_connection.on(
+          "close",
+          (reasonCode, description) =>
+            on_Socket_Close(socket_connection, reasonCode, description)
+        );
+        socket_connection.on("error", (error) =>
+          on_Socket_Error(socket_connection, error)
+        );
+      }
+      break;
+    }
+  }
 }
 
 async function on_HTTP_Request(request, response) {
-  await loader.route(request, response, db, get_message_object, ws_broadcast_message);
+  await loader.route(
+    request,
+    response,
+    db,
+    get_message_object,
+    ws_broadcast_message
+  );
 }
 
 function on_HTTP_Stream(stream, headers) {}
@@ -189,33 +209,33 @@ function on_Message_From_Client(socket_connection, message) {
       client_message_object.message !== ""
     ) {
       var contactid = `91${client_message_object.to}@c.us`;
-      active_users
+      active_users.active_users
         .get_active_user_by_socket(socket_connection)
         ?.ws_web_auto_instance?.getWSContactDetails(contactid)
         .then((contact) => {
           var contactto = contact;
           active_users
-            .get_active_user_by_socket(socket_connection)
+            .active_users.get_active_user_by_socket(socket_connection)
             ?.ws_web_auto_instance?.getWSChat(contactto)
             .then((chat) => {
               var toname =
                 contactto.name !== "" ? contactto.name : contactto.number;
-              ws_status_msg = `'${client_message_object.from}' to '${toname}':<br>${client_message_object.message}`;
+              ws_status_msg = `From '${client_message_object.from}' to '${toname}':<br>${client_message_object.message}`;
               active_users
-                .get_active_user_by_socket(socket_connection)
+                .active_users.get_active_user_by_socket(socket_connection)
                 ?.ws_web_auto_instance?.sendWSMessage(chat, ws_status_msg)
-                .then((message) => {
-                  console.log(message);
+                .then((return_message) => {
+                  console.log(return_message);
                   let msg_to_broadcast = client_message_object;
                   msg_to_broadcast.timestamp = new Date().toLocaleString();
                   msg_to_broadcast.to = toname;
                   msg_to_broadcast.status = STATUS_GREEN;
-                  let users = active_users.get_active_userlist_by_auth_token(
-                    message.auth_token
+                  let users = active_users.active_users.get_active_userlist_by_auth_token(
+                    client_message_object.auth_token
                   );
-                  for (let user in users) {
+                  for (let i = 0; i < users.length; i++) {
                     ws_broadcast_message(
-                      user.socket_connection,
+                      users[i].socket_connection,
                       msg_to_broadcast
                     );
                   }

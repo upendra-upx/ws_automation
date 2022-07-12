@@ -90,7 +90,6 @@ body::-webkit-scrollbar-track {
 .application {
   display: flex;
   flex-direction: row;
-  flex-wrap: wrap;
   width: 100%;
   opacity: var(--appopacity);
 }
