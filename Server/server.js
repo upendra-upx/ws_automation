@@ -16,6 +16,11 @@ const STATUS_GREEN = 1;
 const STATUS_RED = 2;
 const FUNC_SEND = `SEND_WS_MESSAGE`;
 const FUNC_BROADCAST = `BROADCAST`;
+const FUNC_WS_AUTO_CLIENT_AUTH = `WS_AUTH`;
+const FUNC_WS_AUTO_CLIENT_STATE = `WS_STATE`;
+const WS_AUTO_CLIENT_STATE_CONNECTING = `WS_CONNECTING`;
+const WS_AUTO_CLIENT_STATE_AUTH = `WS_AUTH_REQUIRED`;
+const WS_AUTO_CLIENT_STATE_READY = `WS_CLIENT_READY`;
 const FROM_WS_AUTO_CLIENT = `Web Auto-Client`;
 const FROM_WS_AUTO_SERVER = `Web Auto-Server`;
 const MESSAGE_TYPE_CHAT = 0;
@@ -127,6 +132,7 @@ http_server.on("stream", (stream, headers) => on_HTTP_Stream(stream, headers));
 
 const socket_server = new WebSocketServer({
   httpServer: http_server,
+  autoAcceptConnections: false,
 });
 
 socket_server.on("request", (request) => on_Socket_Request(request));
@@ -160,31 +166,50 @@ http_server.listen(process.env.HTTP_PORT, () => {
 });
 
 function on_Socket_Request(request) {
+  let socket_connection_valid = false;
   for (let i = 0; i < request.cookies.length; i++) {
     let csrf_cookie = request.cookies[i];
     if (csrf_cookie.name == `x-csrf`) {
       let auth_token = csrf_cookie.value;
       if (auth_token !== null) {
-        let socket_connection = request.accept(null, request.origin);
-        socket_connection.id = new Date().toLocaleString();
-        active_users.active_users.update_socket_conn_by_auth_token(
-          auth_token,
-          socket_connection
-        );
-        socket_connection.on("message", (message) =>
-          on_Message_From_Client(socket_connection, message)
-        );
-        socket_connection.on(
-          "close",
-          (reasonCode, description) =>
+        // Check if Auth Token is valid
+        let active_users_list =
+          active_users.active_users.get_active_userlist_by_auth_token(
+            auth_token
+          );
+        if (active_users_list !== null) {
+          socket_connection_valid = true;
+          let socket_connection = request.accept(null, request.origin);
+          socket_connection.id = new Date().toLocaleString();
+          active_users.active_users.update_socket_conn_by_auth_token(
+            auth_token,
+            socket_connection
+          );
+
+          socket_connection.on("message", (message) =>
+            on_Message_From_Client(socket_connection, message)
+          );
+          socket_connection.on("close", (reasonCode, description) =>
             on_Socket_Close(socket_connection, reasonCode, description)
-        );
-        socket_connection.on("error", (error) =>
-          on_Socket_Error(socket_connection, error)
-        );
+          );
+          socket_connection.on("error", (error) =>
+            on_Socket_Error(socket_connection, error)
+          );
+        } else {
+          request.reject();
+          console.error(
+            "Socket Connection rejected due to wrong or missing auth_token"
+          );
+        }
       }
       break;
     }
+  }
+  if (socket_connection_valid == false) {
+    request.reject();
+    console.error(
+      "Socket Connection rejected due to wrong or missing auth_token"
+    );
   }
 }
 
@@ -205,7 +230,7 @@ function on_Message_From_Client(socket_connection, message) {
   console.log(client_message_object);
   if (socket_connection !== undefined && socket_connection !== null) {
     if (
-      client_message_object.to !== "" &&
+      client_message_object.function == FUNC_SEND &&
       client_message_object.message !== ""
     ) {
       var contactid = `91${client_message_object.to}@c.us`;
@@ -214,15 +239,15 @@ function on_Message_From_Client(socket_connection, message) {
         ?.ws_web_auto_instance?.getWSContactDetails(contactid)
         .then((contact) => {
           var contactto = contact;
-          active_users
-            .active_users.get_active_user_by_socket(socket_connection)
+          active_users.active_users
+            .get_active_user_by_socket(socket_connection)
             ?.ws_web_auto_instance?.getWSChat(contactto)
             .then((chat) => {
               var toname =
                 contactto.name !== "" ? contactto.name : contactto.number;
               ws_status_msg = `From '${client_message_object.from}' to '${toname}':<br>${client_message_object.message}`;
-              active_users
-                .active_users.get_active_user_by_socket(socket_connection)
+              active_users.active_users
+                .get_active_user_by_socket(socket_connection)
                 ?.ws_web_auto_instance?.sendWSMessage(chat, ws_status_msg)
                 .then((return_message) => {
                   console.log(return_message);
@@ -230,13 +255,20 @@ function on_Message_From_Client(socket_connection, message) {
                   msg_to_broadcast.timestamp = new Date().toLocaleString();
                   msg_to_broadcast.to = toname;
                   msg_to_broadcast.status = STATUS_GREEN;
-                  let users = active_users.active_users.get_active_userlist_by_auth_token(
-                    client_message_object.auth_token
-                  );
-                  for (let i = 0; i < users.length; i++) {
-                    ws_broadcast_message(
-                      users[i].socket_connection,
-                      msg_to_broadcast
+                  let users =
+                    active_users.active_users.get_active_userlist_by_auth_token(
+                      client_message_object.auth_token
+                    );
+                  if (users !== null) {
+                    for (let i = 0; i < users.length; i++) {
+                      ws_broadcast_message(
+                        users[i].socket_connection,
+                        msg_to_broadcast
+                      );
+                    }
+                  } else {
+                    console.error(
+                      "Send Message Rejected due to wrong or missing auth_token"
                     );
                   }
                 })
@@ -253,6 +285,21 @@ function on_Message_From_Client(socket_connection, message) {
               return;
             });
         });
+    } else if (client_message_object.function == FUNC_WS_AUTO_CLIENT_STATE) {
+      let msg_to_broadcast = client_message_object;
+      msg_to_broadcast.timestamp = new Date().toLocaleString();
+      msg_to_broadcast.from = FROM_WS_AUTO_SERVER;
+      msg_to_broadcast.message = null;
+      let user =
+        active_users.active_users?.get_active_user_by_socket(socket_connection);
+      if (user !== null || user !== undefined) {
+        msg_to_broadcast.message = active_users.active_users
+          ?.get_active_user_by_socket(socket_connection)
+          ?.ws_web_auto_instance?.get_Ws_client_state();
+        if (msg_to_broadcast.message !== null) {
+          ws_broadcast_message(socket_connection, msg_to_broadcast);
+        }
+      }
     }
   }
 }

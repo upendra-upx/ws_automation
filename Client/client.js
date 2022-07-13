@@ -5,6 +5,11 @@ const STATUS_GREEN = 1;
 const STATUS_RED = 2;
 const FUNC_SEND = `SEND_WS_MESSAGE`;
 const FUNC_BROADCAST = `BROADCAST`;
+const FUNC_WS_AUTO_CLIENT_AUTH = `WS_AUTH`;
+const FUNC_WS_AUTO_CLIENT_STATE = `WS_STATE`;
+const WS_AUTO_CLIENT_STATE_CONNECTING = `WS_CONNECTING`;
+const WS_AUTO_CLIENT_STATE_AUTH = `WS_AUTH_REQUIRED`;
+const WS_AUTO_CLIENT_STATE_READY = `WS_CLIENT_READY`;
 const FROM_WS_AUTO_CLIENT = `Web Auto-Client`;
 const FROM_WS_AUTO_SERVER = `Web Auto-Server`;
 const MESSAGE_TYPE_CHAT = 0;
@@ -185,7 +190,7 @@ function startConnection(auth_token, window) {
   if (auth_token !== undefined || auth_token !== null || auth_token !== ``) {
     window.gv_auth_token = auth_token;
 
-    history.replaceState(history.state, 'Authenticate')
+    history.replaceState(history.state, "Authenticate");
 
     let cookie = `x-csrf=${auth_token}`;
 
@@ -193,9 +198,9 @@ function startConnection(auth_token, window) {
 
     socket = new WebSocket("wss://diytests.ddns.net:443");
 
-    socket.onopen = (event) => onSocketOpen(event);
+    socket.onopen = (event) => onSocketOpen(event, window);
 
-    socket.onmessage = (message) => onSocketMessage(message);
+    socket.onmessage = (message) => onSocketMessage(message, window);
 
     socket.onclose = (event) => onSocketClose(event);
 
@@ -207,6 +212,7 @@ function toggleLoginPopup() {
   if ((loginstate = true)) {
     var application = document.getElementById(`application`);
     var login = document.getElementById(`login`);
+    document.getElementById(`login_form`).style.display = `flex`;
 
     application.style.opacity = 1;
     login.style.display = `none`;
@@ -225,11 +231,13 @@ function SendMsg(event, window) {
   message_2_send = message_2_send.replace(/[\n\r]/g, "<br>");
   let multi_send_to = message_2_send_to.split(`;`);
   multi_send_to.forEach((currentValue) => {
-    message_object.timestamp = new Date().toLocaleString();
-    message_object.auth_token = window.gv_auth_token;
-    message_object.to = currentValue;
-    message_object.message_type = MESSAGE_TYPE_CHAT;
-    message_object.message = message_2_send;
+    let message_obj = message_object;
+    message_obj.timestamp = new Date().toLocaleString();
+    message_obj.auth_token = window.gv_auth_token;
+    message_obj.function = FUNC_SEND;
+    message_obj.to = currentValue;
+    message_obj.message_type = MESSAGE_TYPE_CHAT;
+    message_obj.message = message_2_send;
 
     if (
       socket !== undefined &&
@@ -239,20 +247,50 @@ function SendMsg(event, window) {
       message_2_send_to !== "" &&
       message_2_send !== ""
     ) {
-      socket.send(JSON.stringify(message_object));
+      socket.send(JSON.stringify(message_obj));
     }
   });
 }
 
-function onSocketOpen(event) {
+function onSocketOpen(event, window) {
   console.log("[WebSocket] Connection established");
-  toggleLoginPopup();
+  console.log("Checking Client Status");
+  // Check WhatsApp Client Status, if Ready then Close login popup
+  let message_obj = message_object;
+  message_obj.timestamp = new Date().toLocaleString();
+  message_obj.function = FUNC_WS_AUTO_CLIENT_STATE;
+  socket.send(JSON.stringify(message_obj));
 }
 
-function onSocketMessage(message) {
+function onSocketMessage(message, window) {
   console.log(`[message] Data received from server: ${message.data}`);
   let msg = JSON.parse(message.data);
 
+  switch (msg.function) {
+    case FUNC_WS_AUTO_CLIENT_STATE:
+       switch(msg.message){
+        case WS_AUTO_CLIENT_STATE_CONNECTING: break;
+        case WS_AUTO_CLIENT_STATE_AUTH: break;
+        case WS_AUTO_CLIENT_STATE_READY: 
+        toggleLoginPopup(); break;
+       }
+      break;
+    case FUNC_WS_AUTO_CLIENT_AUTH:
+      
+      document.getElementById("login_form").style.display = `none`;
+      document.getElementById("qrcode").src = msg.message;
+      document.getElementById("qrcode_div").style.display = `flex`;
+      break;
+    case FUNC_SEND:
+      formatInputMessageAndDisplay(msg);
+      break;
+    case FUNC_BROADCAST:
+      formatInputMessageAndDisplay(msg);
+      break;
+  }
+}
+
+function formatInputMessageAndDisplay(msg) {
   let htmlmsg,
     timecolor,
     fromcolor,

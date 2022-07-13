@@ -91,6 +91,7 @@ body::-webkit-scrollbar-track {
   display: flex;
   flex-direction: row;
   width: 100%;
+  height: 100%;
   opacity: var(--appopacity);
 }
 
@@ -297,7 +298,7 @@ body::-webkit-scrollbar-track {
   /* line-height: var(--2xfont); */
   border: 0;
   /* padding: var(--5xfont); */
-  font-size: var(--1xfont);
+  font-size: var(--_85xfont);
   flex-wrap: wrap;
   align-content: center;
   border-radius: 2.5px;
@@ -309,12 +310,12 @@ body::-webkit-scrollbar-track {
   flex-wrap: wrap;
   align-content: center;
   justify-content: center;
-  font-size: var(--1_5xfont);
+  font-size: var(--1xfont);
   color: hsl(0deg 0% 97%);
   font-weight: 600;
   background-color: #00c5b2;
-  padding: var(--_85xfont);
-  margin: var(--_85xfont);
+  padding: var(--_75xfont);
+  margin: var(--_75xfont);
 }
 
 .username_label {
@@ -330,9 +331,9 @@ body::-webkit-scrollbar-track {
 }
 
 .username {
-  font-size: var(--1xfont);
-  width: var(--15xfont);
-  height: var(--2xfont);
+  font-size: var(--_85xfont);
+  width: var(--10xfont);
+  height: var(--1_25xfont);
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica,
     Arial, sans-serif;
   margin: var(--1xfont) 0 var(--_5xfont) 0;
@@ -344,9 +345,9 @@ body::-webkit-scrollbar-track {
 }
 
 .password {
-  font-size: var(--1xfont);
-  width: var(--15xfont);
-  height: var(--2xfont);
+  font-size: var(--_85xfont);
+  width: var(--10xfont);
+  height: var(--1_25xfont);
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica,
     Arial, sans-serif;
 }
@@ -355,8 +356,8 @@ body::-webkit-scrollbar-track {
   cursor: pointer;
   right: 0px;
   bottom: 0px;
-  width: var(--1xfont);
-  height: var(--2xfont);
+  width: var(--_75xfont);
+  height: var(--1xfont);
   position: absolute;
 }
 
@@ -381,7 +382,7 @@ body::-webkit-scrollbar-track {
 .login_button {  
   justify-content: center;
   font-weight: 600;
-  margin: var(--2xfont) auto auto auto;
+  margin: var(--1xfont) auto auto auto;
   padding: var(--_5xfont);
   border: 0;
   width: 25%;
@@ -394,7 +395,7 @@ body::-webkit-scrollbar-track {
 .signup_button {
   justify-content: center;  
   font-weight: 600;
-  margin: var(--2xfont) auto auto auto;
+  margin: var(--1xfont) auto auto auto;
   padding: var(--_5xfont);
   border: 0;
   width: 25%;
@@ -402,4 +403,31 @@ body::-webkit-scrollbar-track {
   color: hsl(100, 100%, 100%, 1);
   background-color: #4caf50;
   cursor: pointer;
+}
+
+.qrcode_div{
+  display: none;
+  margin: var(--1xfont);
+  flex-direction: column;
+  justify-content: center;
+    margin: auto;
+    background-color: var(--loginbackgroundcolor);
+}
+
+.qrcode_head{
+  align-content: center;
+  justify-content: center;
+  font-size: var(--1xfont);
+  color: hsl(0deg 0% 97%);
+  font-weight: 600;
+  background-color: #00c5b2;
+  padding: var(--_75xfont);
+  margin: var(--_75xfont);
+}
+
+.qrcode{
+  width: var(--15xfont);
+  height: var(--15xfont);
+  margin: auto;
+  padding: var(--1xfont);
 }
