@@ -1,5 +1,26 @@
 {
-    "configurations": [
+    "configurations": [                
+        {
+            "console": "integratedTerminal",
+            "internalConsoleOptions": "neverOpen",
+            "name": "nodemon",
+            "program": "${workspaceFolder}/Server/server.js",
+            "request": "launch",
+            "restart": true,
+            "runtimeExecutable": "nodemon",
+            "skipFiles": [
+                "<node_internals>/**"
+            ],
+            "type": "node"
+        },
+        {
+            "command": "npm test",
+            "name": "Run NPM Test",
+            "request": "launch",
+            "cwd": "${workspaceFolder}/Server/",
+            "type": "node-terminal"
+        },
+
         {
             "type": "pwa-msedge",
             "name": "Launch Microsoft Edge",
@@ -7,7 +28,7 @@
             "runtimeArgs": [
                 "--remote-debugging-port=9222"
             ],
-            "url": "c:\\Users\\Raghv\\Desktop\\Upen\\ws_auto.html", // Provide your project's url to finish configuring
+            "url": "http://127.0.0.1:8080/ws_auto.html", // Provide your project's url to finish configuring
             "presentation": {
                 "hidden": true
             }
@@ -20,7 +41,7 @@
                 "--headless",
                 "--remote-debugging-port=9222"
             ],
-            "url": "c:\\Users\\Raghv\\Desktop\\Upen\\ws_auto.html", // Provide your project's url to finish configuring
+            "url": "http://127.0.0.1:8080/ws_auto.html", // Provide your project's url to finish configuring
             "presentation": {
                 "hidden": true
             }
@@ -29,7 +50,7 @@
             "type": "vscode-edge-devtools.debug",
             "name": "Open Edge DevTools",
             "request": "attach",
-            "url": "c:\\Users\\Raghv\\Desktop\\Upen\\ws_auto.html", // Provide your project's url to finish configuring
+            "url": "http://127.0.0.1:8080/ws_auto.html", // Provide your project's url to finish configuring
             "presentation": {
                 "hidden": true
             }

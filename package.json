@@ -1,18 +1,29 @@
 {
   "dependencies": {
+    "dotenv": "^16.0.1",
+    "mongoose": "^6.4.4",
     "nodemon": "^2.0.16",
-    "openssl": "^2.0.0",
     "qrcode-terminal": "^0.12.0",
-    "whatsapp-web.js": "^1.16.7"
+    "uuid": "^8.3.2",
+    "websocket": "^1.0.34",
+    "whatsapp-web.js": "^1.17.1"
   },
   "name": "ws_automation",
   "version": "1.0.0",
   "description": "WhatsApp Aiutomation",
-  "main": "send_msg.js",
-  "devDependencies": {},
+  "main": "./Server/server.js",
   "scripts": {
-    "test": "nodemon server.js"
+    "test": "nodemon ./Server/server.js",
+    "start": "node ./Server/server.js"
   },
   "author": "Upendra Verma",
-  "license": "ISC"
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/upendra-upx/ws_automation.git"
+  },
+  "bugs": {
+    "url": "https://github.com/upendra-upx/ws_automation/issues"
+  },
+  "homepage": "https://github.com/upendra-upx/ws_automation#readme"
 }

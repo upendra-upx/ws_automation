@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="ws_auto.css" />
+    <script src="client.js"></script>
+    <title>WhatsApp Automation</title>
+  </head>
+  <body>
+    <div class="application" id="application">
+      <div class="main" id="main">
+        <div class="title">
+          <p class="title_txt">Send Message</p>
+        </div>
+        <div class="mobnum_div" id="mobnum_div">
+          <label for="contact" class="label_text">Number</label>
+          <textarea
+            class="mobnum_ip_val"
+            id="contact"
+            type="text"
+            rows="1"
+            required="true"
+            placeholder="Enter WhatsApp Number separated by ;"
+          >
+9953225780</textarea
+          >
+        </div>
+        <div class="message_div" id="message_div">
+          <label for="message" class="label_text">Message</label>
+          <textarea
+            class="msg_ip_msg"
+            id="message"
+            type="text"
+            rows="10"
+            maxlength="255"
+            required="true"
+            placeholder="Enter Message Here!"
+          >
+Dear Customer,&#013;&#013;We offer DIY 'marketing'.&#013;&#013;Regards,&#013;DIY Team</textarea
+          >
+        </div>
+        <div class="sendbtn_div" id="sendbtn_div">
+          <input
+            class="msg_ip_btn"
+            id="msg_ip_btn"
+            type="button"
+            value="Send"
+          />
+        </div>
+      </div>
+      <div class="chat_div" id="chat_div">
+        <label class="chat_label" for="chat">Recent Chats</label>
+        <div class="chat" id="chat"></div>
+      </div>
+    </div>
+    <div class="login" id="login">
+      <form class="login_form" id="login_form" action="/" method="get">
+        <span class="login_banner" id="login_banner">WhatsApp Automation</span>
+        <label
+          for="username"
+          class="username_label login_items"
+          id="username_lable"
+        ></label>
+        <input
+          type="text"
+          class="username login_items"
+          id="username"
+          maxlength="12"
+          placeholder="Mobile Number"
+        />
+        <div class="password_div" id="password_div">
+          <label
+            for="password"
+            class="password_label login_items"
+            id="password_label"
+          ></label>
+          <input
+            type="password"
+            class="password login_items"
+            id="password"
+            placeholder="Password"
+          />
+          <svg
+            class="closed_eye password_eye"
+            id="closed_eye"
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+          >
+            <path
+              d="M19.604 2.562l-3.346 3.137c-1.27-.428-2.686-.699-4.243-.699-7.569 0-12.015 6.551-12.015 6.551s1.928 2.951 5.146 5.138l-2.911 2.909 1.414 1.414 17.37-17.035-1.415-1.415zm-6.016 5.779c-3.288-1.453-6.681 1.908-5.265 5.206l-1.726 1.707c-1.814-1.16-3.225-2.65-4.06-3.66 1.493-1.648 4.817-4.594 9.478-4.594.927 0 1.796.119 2.61.315l-1.037 1.026zm-2.883 7.431l5.09-4.993c1.017 3.111-2.003 6.067-5.09 4.993zm13.295-4.221s-4.252 7.449-11.985 7.449c-1.379 0-2.662-.291-3.851-.737l1.614-1.583c.715.193 1.458.32 2.237.32 4.791 0 8.104-3.527 9.504-5.364-.729-.822-1.956-1.99-3.587-2.952l1.489-1.46c2.982 1.9 4.579 4.327 4.579 4.327z"
+            />
+          </svg>
+          <svg
+            class="open_eye password_eye"
+            id="open_eye"
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+          >
+            <path
+              d="M15 12c0 1.654-1.346 3-3 3s-3-1.346-3-3 1.346-3 3-3 3 1.346 3 3zm9-.449s-4.252 8.449-11.985 8.449c-7.18 0-12.015-8.449-12.015-8.449s4.446-7.551 12.015-7.551c7.694 0 11.985 7.551 11.985 7.551zm-7 .449c0-2.757-2.243-5-5-5s-5 2.243-5 5 2.243 5 5 5 5-2.243 5-5z"
+            />
+          </svg>
+        </div>
+        <div class="buttons" id="buttons">
+          <button
+            form="login_form"
+            type="submit"
+            class="login_button login_items"
+            id="login_button"
+          >Login</button>
+          <button
+            form="login_form"
+            type="button"
+            class="signup_button login_items"
+            id="signup_button"
+          >Sign Up</button>
+        </div>
+      </form>
+    </div>
+  </body>
+</html>
