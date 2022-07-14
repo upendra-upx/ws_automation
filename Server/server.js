@@ -4,6 +4,7 @@ require(`dotenv`).config();
 
 const loader = require(`./Modules/loader`);
 const http2 = require(`http2`);
+const http = require('http');
 const WebSocketServer = require(`websocket`).server;
 const fs = require(`fs`);
 
@@ -95,43 +96,49 @@ function onDbOpen() {
 
 var ws_status_msg;
 
-const http_server = http2.createSecureServer({
+// Redirect from http port 80 to https 443
+http.createServer(function (req, res) {
+    res.writeHead(301, { "Location": "https://" + req.headers['host'] + req.url });
+    res.end();
+}).listen(process.env.HTTP_PORT, () => {
+  console.log("HTTP Server started on Port: " + process.env.HTTP_PORT);
+});
+
+const https_server = http2.createSecureServer({
   key: fs.readFileSync(`./Server/certificates/privkey.pem`),
-  // key: fs.readFileSync(`./Server/certificates/localhost-private.pem`),
   cert: fs.readFileSync(`./Server/certificates/fullchain.pem`),
-  // cert: fs.readFileSync("./Server/certificates/localhost-cert.pem"),
   origins: "*",
   allowHTTP1: true,
 });
 
-http_server.on("connection", (socket) => {
+https_server.on("connection", (socket) => {
   //console.log(socket);
 });
 
-http_server.on("request", async (request, response) =>
+https_server.on("request", async (request, response) =>
   on_HTTP_Request(request, response)
 );
 
-http_server.on("session", (session) => {
+https_server.on("session", (session) => {
   //console.log(session);
 });
 
-http_server.on("sessionError", (error, session) => {
+https_server.on("sessionError", (error, session) => {
   console.error(`${error}; ${session}`);
 });
 
-http_server.on("timeout", (error, session) => {
+https_server.on("timeout", (error, session) => {
   console.log(`HTTP Server timed Out! - ${error} - ${session}`);
 });
 
-http_server.on("unknownProtocol", (socket) => {
+https_server.on("unknownProtocol", (socket) => {
   console.error(`Unknown Protocol error - ${socket}`);
 });
 
-http_server.on("stream", (stream, headers) => on_HTTP_Stream(stream, headers));
+https_server.on("stream", (stream, headers) => on_HTTP_Stream(stream, headers));
 
 const socket_server = new WebSocketServer({
-  httpServer: http_server,
+  httpServer: https_server,
   autoAcceptConnections: false,
 });
 
@@ -161,8 +168,8 @@ function on_Socket_Error(socket_connection, error) {
   active_users.active_users.remove_user_by_socket(socket_connection);
 }
 
-http_server.listen(process.env.HTTP_PORT, () => {
-  console.log("HTTP Server started on Port: " + process.env.HTTP_PORT);
+https_server.listen(process.env.HTTPS_PORT, () => {
+  console.log("HTTPS Server started on Port: " + process.env.HTTPS_PORT);
 });
 
 function on_Socket_Request(request) {
@@ -295,7 +302,7 @@ function on_Message_From_Client(socket_connection, message) {
       if (user !== null || user !== undefined) {
         msg_to_broadcast.message = active_users.active_users
           ?.get_active_user_by_socket(socket_connection)
-          ?.ws_web_auto_instance?.get_Ws_client_state();
+          ?.ws_web_auto_instance?.get_WS_Client_State();
         if (msg_to_broadcast.message !== null) {
           ws_broadcast_message(socket_connection, msg_to_broadcast);
         }

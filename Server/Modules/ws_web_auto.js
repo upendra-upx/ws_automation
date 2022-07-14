@@ -1,7 +1,6 @@
 "use strict";
 
 const { Client, LocalAuth } = require(`whatsapp-web.js`);
-//const qrcode_terminal = require(`qrcode-terminal`);
 const qrcode = require(`qrcode`);
 const active_users = require("./active_users");
 
@@ -55,10 +54,10 @@ exports.ws_web_auto = class ws_web_auto {
 
     this.ws_simulator.initialize();
   }
-  get_ws_simulator() {
+  get_WS_Simulator() {
     return this.ws_simulator;
   }
-  get_Ws_client_state() {
+  get_WS_Client_State() {
     return this.client_state;
   }
   on_WS_Simulator_QR(qr) {
@@ -66,10 +65,12 @@ exports.ws_web_auto = class ws_web_auto {
 
     console.log("QR Requested.");
     //qrcode_terminal.generate(qr, { small: true });
-    let opts = { type: 'image/png'};
-    qrcode.toDataURL(qr, opts, (err, url) => this.on_QRCode_Generated(err, url));
+    let opts = { type: "image/png" };
+    qrcode.toDataURL(qr, opts, (err, url) =>
+      this.on_QRCode_Generated(err, url)
+    );
   }
-  on_QRCode_Generated(err, url){
+  on_QRCode_Generated(err, url) {
     if (err) throw err;
 
     if (url !== null) {

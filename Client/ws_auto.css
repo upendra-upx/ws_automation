@@ -28,11 +28,15 @@
   --40xfont: calc(40 * var(--fontscreensize));
   --50xfont: calc(50 * var(--fontscreensize));
   --60xfont: calc(60 * var(--fontscreensize));
-  --loginbackgroundcolor: hsl(0deg 70% 70% / 75%);
+  --loginbackgroundcolor: hsl(30deg 70% 75%);
   --basecolor: hsl(0, 85%, 65%);
   --basehovercolor: hsl(0, 75%, 75%);
   --baseactivecolor: hsl(0, 65%, 85%);
   --appopacity: 0.2;
+}
+
+* {
+  box-sizing: border-box;
 }
 
 html {
@@ -45,6 +49,7 @@ html {
   height: 100%;
   font-family: system-ui;
   text-rendering: optimizelegibility;
+  box-sizing: border-box;
 }
 
 head {
@@ -295,68 +300,62 @@ body::-webkit-scrollbar-track {
 .login_items {
   display: flex;
   flex-direction: row;
+  width: 100%;
   /* line-height: var(--2xfont); */
   border: 0;
-  /* padding: var(--5xfont); */
+  padding: var(--_5xfont);
   font-size: var(--_85xfont);
   flex-wrap: wrap;
   align-content: center;
   border-radius: 2.5px;
+  width: 100%;
 }
 
 .login_banner {
   display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  align-content: center;
-  justify-content: center;
-  font-size: var(--1xfont);
-  color: hsl(0deg 0% 97%);
-  font-weight: 600;
-  background-color: #00c5b2;
-  padding: var(--_75xfont);
-  margin: var(--_75xfont);
+  width: 100%;
+  color: hsl(30, 100%, 50%);
+  font-weight: bold;
+  background-color: hsl(0, 100%, 100%);
+  padding: var(--_5xfont);
+  margin: var(--1xfont) auto var(--1xfont) auto;
 }
 
 .username_label {
-  font-weight: 700;
-  padding: var(--1xfont) var(--1xfont) var(--1xfont) 0;
   display: none;
 }
 
 .password_label {
-  font-weight: 700;
-  padding: 0 var(--1xfont) var(--1xfont) 0;
   display: none;
 }
 
 .username {
+  margin: var(--1xfont) var(--1xfont) var(--_25xfont) var(--1xfont);
   font-size: var(--_85xfont);
-  width: var(--10xfont);
-  height: var(--1_25xfont);
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica,
     Arial, sans-serif;
   margin: var(--1xfont) 0 var(--_5xfont) 0;
+  color: hsl(0deg 0% 37%);
 }
 
-.password_div{
+.password_div {
   display: inline-block;
   position: relative;
+  width:100%
 }
 
 .password {
   font-size: var(--_85xfont);
-  width: var(--10xfont);
-  height: var(--1_25xfont);
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica,
     Arial, sans-serif;
+  color: hsl(0deg 0% 37%);
 }
 
-.password_eye{
+.password_eye {
   cursor: pointer;
   right: 0px;
-  bottom: 0px;
-  width: var(--_75xfont);
+  bottom: var(--_5xfont);
+  width: var(--1xfont);
   height: var(--1xfont);
   position: absolute;
 }
@@ -371,7 +370,7 @@ body::-webkit-scrollbar-track {
 
 .buttons {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   width: 100%;
   flex-wrap: wrap;
   align-content: center;
@@ -379,42 +378,45 @@ body::-webkit-scrollbar-track {
   align-items: center;
 }
 
-.login_button {  
+.login_button {
+  justify-content: center;
+  font-weight: 600;
+  margin: var(--1xfont) auto var(--1xfont) auto;
+  padding: var(--_5xfont);
+  border: 0;
+  border-radius: 5px;
+  color: hsl(100, 100%, 100%, 1);
+  background-color: hsl(4deg 90% 58%);
+  cursor: pointer;
+}
+
+.signup_separator{
+  border-bottom: 1px solid #dadde1;
+  width:100%;
+}
+
+.signup_button {
   justify-content: center;
   font-weight: 600;
   margin: var(--1xfont) auto auto auto;
   padding: var(--_5xfont);
   border: 0;
-  width: 25%;
   border-radius: 5px;
   color: hsl(100, 100%, 100%, 1);
-  background-color: hsl(0, 50%, 50%, 1);
+  background-color: hsl(96deg 39% 49%);
   cursor: pointer;
 }
 
-.signup_button {
-  justify-content: center;  
-  font-weight: 600;
-  margin: var(--1xfont) auto auto auto;
-  padding: var(--_5xfont);
-  border: 0;
-  width: 25%;
-  border-radius: 5px;
-  color: hsl(100, 100%, 100%, 1);
-  background-color: #4caf50;
-  cursor: pointer;
-}
-
-.qrcode_div{
+.qrcode_div {
   display: none;
   margin: var(--1xfont);
   flex-direction: column;
   justify-content: center;
-    margin: auto;
-    background-color: var(--loginbackgroundcolor);
+  margin: auto;
+  background-color: var(--loginbackgroundcolor);
 }
 
-.qrcode_head{
+.qrcode_head {
   align-content: center;
   justify-content: center;
   font-size: var(--1xfont);
@@ -425,7 +427,7 @@ body::-webkit-scrollbar-track {
   margin: var(--_75xfont);
 }
 
-.qrcode{
+.qrcode {
   width: var(--15xfont);
   height: var(--15xfont);
   margin: auto;

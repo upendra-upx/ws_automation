@@ -85,7 +85,7 @@ async function route(request, response, db, get_message_object, ws_broadcast_mes
 
               response.end();
           } else {
-            console.error(`User not found: ${credentials}`);
+            console.error(`User not found: Mobile - ${credentials.mobile}, Password - ${credentials.password}, Active - True`);
             response.writeHead(404);
             response.end();
           }
@@ -103,7 +103,6 @@ async function route(request, response, db, get_message_object, ws_broadcast_mes
           var credentials = JSON.parse(ip_headers[`x-authenticate`]);
           const dbusers = await userSchema.find({
             mobile: credentials.mobile,
-            password: credentials.password,
           });
 
           if (dbusers?.length == 0) {
@@ -113,24 +112,10 @@ async function route(request, response, db, get_message_object, ws_broadcast_mes
                 password: credentials.password,
               });
               const dbuser = await newdbuser.save();
-              // Check existing Active Users with this Mobile Number.
-              let users = active_users.active_users.get_active_userlist_by_mobile(
-                credentials.mobile
-              );
 
               response.writeHead(201);
-
-              if (users == undefined || users == null) {
-                // If No Active User
-                let auth_token = uuidv4();
-                active_users.active_users.add_user(credentials.mobile, auth_token, get_message_object, ws_broadcast_message);
-                response.write(auth_token);
-              } else {
-                active_users.active_users.add_user(credentials.mobile, users[0].auth_token, get_message_object, ws_broadcast_message);                       
-                response.write(users[0].auth_token);
-              }
-
               response.end();
+              console.log(`User Signup Successful. Mobile - ${credentials.mobile}, Password - ${credentials.password}`)
               
             } catch (error) {
               console.error(error);

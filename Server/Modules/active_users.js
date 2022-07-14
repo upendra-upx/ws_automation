@@ -54,7 +54,7 @@ exports.active_users = class active_users {
       }
     }
     if (found == 0) {
-      ws_simulator_instance?.get_ws_simulator()?.destroy();
+      ws_simulator_instance?.get_WS_Simulator()?.destroy();
       delete arguments[1];
     }
   }

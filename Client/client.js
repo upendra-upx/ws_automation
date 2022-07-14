@@ -126,15 +126,22 @@ function Authenticate(event, window) {
 
   fetch(AuthRequest)
     .then((response) => onAuthenticateResponse(response))
-    .then((auth_token) => startConnection(auth_token, window));
+    .then((auth_token) => startConnection(auth_token, window))
+    .catch((error) => onAuthenticateError(error));
 }
 
 function onAuthenticateResponse(response) {
   if (response.ok) {
     return response.text();
   } else {
-    console.error(`Error in Authenticating: ${response.status}`);
-    throw "Error in Authenticating";
+    throw `Login Error.`;
+  }
+}
+
+function onAuthenticateError(error) {
+  if (error){
+    console.error(error);
+    alert(`${error} Contact DIY to check if your Account is activated!`);
   }
 }
 
@@ -172,15 +179,22 @@ function SignUp(event, window) {
 
   fetch(SignUpRequest)
     .then((response) => onSignupResponse(response))
-    .then((auth_token) => startConnection(auth_token, window));
+    //.then((auth_token) => startConnection(auth_token, window))
+    .catch((error) => onSignupError(error))
 }
 
 function onSignupResponse(response) {
   if (response.ok) {
-    return response.text();
+    alert("Sign up Successful! Please Login now.")
   } else {
-    console.error(`Error in Sign Up: ${response.status}`);
-    throw "Error in Sign Up";
+    throw `Error in Signing Up.`;
+  }
+}
+
+function onSignupError(error) {
+  if (error){
+    console.error(error);
+    alert(`${error} Check if there is already an Account with this Mobile!`);
   }
 }
 
