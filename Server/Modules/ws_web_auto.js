@@ -36,7 +36,7 @@ exports.ws_web_auto = class ws_web_auto {
     this.ws_simulator = new Client({
       authStrategy: new LocalAuth({
         clientId: mobile,
-        dataPath: "../wsweb_auth",
+        dataPath: "../ws_auth_session",
       }),
     });
 
