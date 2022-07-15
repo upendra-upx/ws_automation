@@ -1,16 +1,29 @@
 "use strict";
 
-require(`dotenv`).config();
+const path = require(`path`);
 
-const loader = require(`./Modules/loader`);
+require(`dotenv`).config({
+  path: path.join(
+    path.resolve("../"),
+    path.format({ dir: "Server", base: ".env" })
+  ),
+});
+console.log(process.env.DATABASE_URL);
+const loader = require(path.join(
+  path.resolve("../"),
+  path.format({ dir: "Server/Modules", base: "loader.js" })
+));
 const http2 = require(`http2`);
-const http = require('http');
+const http = require("http");
 const WebSocketServer = require(`websocket`).server;
 const fs = require(`fs`);
 
 // const { MongoClient, ServerApiVersion }  = require(`mongoose`);
 const mongoose = require(`mongoose`);
-const active_users = require(`./Modules/active_users`);
+const active_users = require(path.join(
+  path.resolve("../"),
+  path.format({ dir: "Server/Modules", base: "active_users.js" })
+));
 
 const STATUS_YELLOW = 0;
 const STATUS_GREEN = 1;
@@ -62,9 +75,6 @@ function get_message_object(
   return msg;
 }
 
-const httphostname = "https://localhost";
-const wshostname = "ws://localhost";
-
 const mongodboptions = {
   retryWrites: true,
   w: `majority`,
@@ -78,7 +88,6 @@ const mongodboptions = {
   family: 4, // Use IPv4, skip trying IPv6
 };
 
-// const db = new MongoClient(process.env.DATABASE_URL, { useNewUrlParser: true, useUnifiedTopology: true, serverApi: ServerApiVersion.v1 });
 mongoose.connect(process.env.DATABASE_URL, mongodboptions);
 
 const db = mongoose.connection;
@@ -97,16 +106,30 @@ function onDbOpen() {
 var ws_status_msg;
 
 // Redirect from http port 80 to https 443
-http.createServer(function (req, res) {
-    res.writeHead(301, { "Location": "https://" + req.headers['host'] + req.url });
+http
+  .createServer(function (req, res) {
+    res.writeHead(301, {
+      Location: "https://" + req.headers["host"] + req.url,
+    });
     res.end();
-}).listen(process.env.HTTP_PORT, () => {
-  console.log("HTTP Server started on Port: " + process.env.HTTP_PORT);
-});
+  })
+  .listen(process.env.HTTP_PORT, () => {
+    console.log("HTTP Server started on Port: " + process.env.HTTP_PORT);
+  });
 
 const https_server = http2.createSecureServer({
-  key: fs.readFileSync(`./Server/certificates/privkey.pem`),
-  cert: fs.readFileSync(`./Server/certificates/fullchain.pem`),
+  key: fs.readFileSync(
+    path.join(
+      path.resolve("../"),
+      path.format({ dir: "Server/Certificates", base: "privkey.pem" })
+    )
+  ),
+  cert: fs.readFileSync(
+    path.join(
+      path.resolve("../"),
+      path.format({ dir: "Server/Certificates", base: "fullchain.pem" })
+    )
+  ),
   origins: "*",
   allowHTTP1: true,
 });
