@@ -1,10 +1,24 @@
-'use strict';
+"use strict";
 
-const userSchema = require(`../../Models/userschema`);
-const active_users = require(`./active_users`);
+const path = require(`path`);
+
+const userSchema = require(path.join(
+  path.resolve("../"),
+  path.format({ dir: "Models", base: "userschema.js" })
+));
+const active_users = require(path.join(
+  path.resolve("../"),
+  path.format({ dir: "Server/Modules", base: "active_users.js" })
+));
 const { v4: uuidv4 } = require("uuid");
 
-async function route(request, response, db, get_message_object, ws_broadcast_message) {
+async function route(
+  request,
+  response,
+  db,
+  get_message_object,
+  ws_broadcast_message
+) {
   var ip_headers = request.headers;
   var op_stream = response.stream;
   console.log(ip_headers[":path"]);
@@ -29,12 +43,15 @@ async function route(request, response, db, get_message_object, ws_broadcast_mes
     op_stream.end();
   }
 
-  var path = ip_headers[":path"];
+  var http_path = ip_headers[":path"];
 
-  switch (path) {
+  switch (http_path) {
     case `/ws_auto.css`:
       op_stream.respondWithFile(
-        "./Client/ws_auto.css",
+        path.join(
+          path.resolve("../"),
+          path.format({ dir: "Client", base: "ws_auto.css" })
+        ),
         { "content-type": "text/css; charset=utf-8" },
         { statCheck, onError }
       );
@@ -42,7 +59,10 @@ async function route(request, response, db, get_message_object, ws_broadcast_mes
 
     case `/client.js`:
       op_stream.respondWithFile(
-        "./Client/client.js",
+        path.join(
+          path.resolve("../"),
+          path.format({ dir: "Client", base: "client.js" })
+        ),
         { "content-type": "text/javascript; charset=utf-8" },
         { statCheck, onError }
       );
@@ -50,7 +70,10 @@ async function route(request, response, db, get_message_object, ws_broadcast_mes
 
     case `/favicon.ico`:
       op_stream.respondWithFile(
-        "./Client/favicon.ico/",
+        path.join(
+          path.resolve("../"),
+          path.format({ dir: "Client", base: "favicon.ico" })
+        ),
         { "content-type": "image/x-icon;" },
         { statCheck, onError }
       );
@@ -63,29 +86,41 @@ async function route(request, response, db, get_message_object, ws_broadcast_mes
           const dbusers = await userSchema.find({
             mobile: credentials.mobile,
             password: credentials.password,
-            active: true
+            active: true,
           });
           if (dbusers?.length == 1) {
-              // Check existing Active Users with this Mobile Number.
-              let users = active_users.active_users.get_active_userlist_by_mobile(
-                credentials.mobile
+            // Check existing Active Users with this Mobile Number.
+            let users = active_users.active_users.get_active_userlist_by_mobile(
+              credentials.mobile
+            );
+
+            response.writeHead(201);
+
+            if (users == undefined || users == null) {
+              // If No Active User
+              let auth_token = uuidv4();
+              active_users.active_users.add_user(
+                credentials.mobile,
+                auth_token,
+                get_message_object,
+                ws_broadcast_message
               );
+              response.write(auth_token);
+            } else {
+              active_users.active_users.add_user(
+                credentials.mobile,
+                users[0].auth_token,
+                get_message_object,
+                ws_broadcast_message
+              );
+              response.write(users[0].auth_token);
+            }
 
-              response.writeHead(201);
-
-              if (users == undefined || users == null) {
-                // If No Active User
-                let auth_token = uuidv4();
-                active_users.active_users.add_user(credentials.mobile, auth_token, get_message_object, ws_broadcast_message);
-                response.write(auth_token);
-              } else {
-                active_users.active_users.add_user(credentials.mobile, users[0].auth_token, get_message_object, ws_broadcast_message);                
-                response.write(users[0].auth_token);
-              }
-
-              response.end();
+            response.end();
           } else {
-            console.error(`User not found: Mobile - ${credentials.mobile}, Password - ${credentials.password}, Active - True`);
+            console.error(
+              `User not found: Mobile - ${credentials.mobile}, Password - ${credentials.password}, Active - True`
+            );
             response.writeHead(404);
             response.end();
           }
@@ -115,8 +150,9 @@ async function route(request, response, db, get_message_object, ws_broadcast_mes
 
               response.writeHead(201);
               response.end();
-              console.log(`User Signup Successful. Mobile - ${credentials.mobile}, Password - ${credentials.password}`)
-              
+              console.log(
+                `User Signup Successful. Mobile - ${credentials.mobile}, Password - ${credentials.password}`
+              );
             } catch (error) {
               console.error(error);
               console.error(error);
@@ -137,7 +173,10 @@ async function route(request, response, db, get_message_object, ws_broadcast_mes
 
     case `/`:
       op_stream.respondWithFile(
-        "./Client/ws_auto.html",
+        path.join(
+          path.resolve("../"),
+          path.format({ dir: "Client", base: "ws_auto.html" })
+        ),
         { "content-type": "text/html; charset=utf-8" },
         { statCheck, onError }
       );
@@ -145,4 +184,4 @@ async function route(request, response, db, get_message_object, ws_broadcast_mes
   }
 }
 
-module.exports = { route};
+module.exports = { route };

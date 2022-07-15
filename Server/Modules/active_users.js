@@ -1,19 +1,34 @@
-'use strict';
+"use strict";
 
-const ws_web_auto = require("./ws_web_auto");
+const path = require(`path`);
+
+const ws_web_auto = require(path.join(
+  path.resolve("../"),
+  path.format({ dir: "Server/Modules", base: "ws_web_auto.js" })
+));
 
 exports.active_users = class active_users {
   static users = [];
   static ws_broadcast_message;
   static get_message_object;
   constructor() {}
-  static add_user(mobile, auth_token, get_message_object, ws_broadcast_message, socket_connection = undefined) {
+  static add_user(
+    mobile,
+    auth_token,
+    get_message_object,
+    ws_broadcast_message,
+    socket_connection = undefined
+  ) {
     this.ws_broadcast_message = ws_broadcast_message;
     this.get_message_object = get_message_object;
     let userlist = this.get_active_userlist_by_mobile(mobile);
 
     if (userlist == undefined || userlist == null) {
-      let ws_instance = new ws_web_auto.ws_web_auto(mobile, get_message_object, ws_broadcast_message);
+      let ws_instance = new ws_web_auto.ws_web_auto(
+        mobile,
+        get_message_object,
+        ws_broadcast_message
+      );
       this.users.push({
         mobile: mobile,
         auth_token: auth_token,
@@ -40,9 +55,11 @@ exports.active_users = class active_users {
         console.log(
           `Added Active User with Mobile-${mobile}, Auth Token-${auth_token}, Socket Connection-${socket_connection}, WS Web Instance-${userlist[0].ws_web_auto_instance}`
         );
-      } else{
-        console.log(`Error - User Already Exist with with Mobile-${mobile}, Auth Token-${auth_token}, Socket Connection-${socket_connection}, WS Web Instance-${userlist[0].ws_web_auto_instance}`);
-        throw `Error - User Already Exist with with Mobile-${mobile}, Auth Token-${auth_token}, Socket Connection-${socket_connection}, WS Web Instance-${userlist[0].ws_web_auto_instance}`;        
+      } else {
+        console.log(
+          `Error - User Already Exist with with Mobile-${mobile}, Auth Token-${auth_token}, Socket Connection-${socket_connection}, WS Web Instance-${userlist[0].ws_web_auto_instance}`
+        );
+        throw `Error - User Already Exist with with Mobile-${mobile}, Auth Token-${auth_token}, Socket Connection-${socket_connection}, WS Web Instance-${userlist[0].ws_web_auto_instance}`;
       }
     }
   }
@@ -150,4 +167,4 @@ exports.active_users = class active_users {
       }
     }
   }
-}
+};

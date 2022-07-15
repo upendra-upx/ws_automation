@@ -1,8 +1,13 @@
 "use strict";
 
+const path = require(`path`);
+
 const { Client, LocalAuth } = require(`whatsapp-web.js`);
 const qrcode = require(`qrcode`);
-const active_users = require("./active_users");
+const active_users = require(path.join(
+  path.resolve("../"),
+  path.format({ dir: "Server/Modules", base: "active_users.js" })
+));
 
 const STATUS_YELLOW = 0;
 const STATUS_GREEN = 1;
@@ -36,7 +41,11 @@ exports.ws_web_auto = class ws_web_auto {
     this.ws_simulator = new Client({
       authStrategy: new LocalAuth({
         clientId: mobile,
-        dataPath: "../ws_auth_session",
+        dataPath: path.join(
+          path.resolve("../"),
+          path.format({ dir: "Server", base: "ws_auth_session" })
+        ),
+        puppeteer: {args: ['--no-sandbox']}
       }),
     });
 

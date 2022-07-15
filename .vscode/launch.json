@@ -1,9 +1,11 @@
 {
     "configurations": [                
+        
         {
             "console": "integratedTerminal",
             "internalConsoleOptions": "neverOpen",
             "name": "nodemon",
+            "cwd": "${workspaceFolder}/Server/",
             "program": "${workspaceFolder}/Server/server.js",
             "request": "launch",
             "restart": true,
