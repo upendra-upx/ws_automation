@@ -13,12 +13,8 @@
   "description": "WhatsApp Aiutomation",
   "main": "./Server/server.js",
   "scripts": {
-<<<<<<< HEAD
-    "test": "nodemon ws_auto_back.js"
-=======
     "test": "nodemon ./server.js",
     "start": "node ./server.js"
->>>>>>> origin/Rag-Windows
   },
   "author": "Upendra Verma",
   "license": "ISC",
