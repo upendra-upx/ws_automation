@@ -45,6 +45,7 @@ exports.ws_web_auto = class ws_web_auto {
           path.resolve("../"),
           path.format({ dir: "Server", base: "ws_auth_session" })
         ),
+        puppeteer: {args: ['--no-sandbox']}
       }),
     });
 
