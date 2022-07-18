@@ -35,7 +35,7 @@
   --appopacity: 0.2;
 }
 
-* {
+*, *::before, *::after {
   box-sizing: border-box;
 }
 
@@ -341,7 +341,7 @@ body::-webkit-scrollbar-track {
 .password_div {
   display: inline-block;
   position: relative;
-  width:100%
+  width: 100%;
 }
 
 .password {
@@ -390,9 +390,9 @@ body::-webkit-scrollbar-track {
   cursor: pointer;
 }
 
-.signup_separator{
+.signup_separator {
   border-bottom: 1px solid #dadde1;
-  width:100%;
+  width: 100%;
 }
 
 .signup_button {
@@ -432,4 +432,67 @@ body::-webkit-scrollbar-track {
   height: var(--15xfont);
   margin: auto;
   padding: var(--1xfont);
+}
+
+.login_loading_div{
+  display: none;
+  position: relative;
+  overflow: hidden;
+}
+
+.loading_text{
+  display: flex;
+  animation: text-color 2s ease-in-out infinite alternate;
+}
+.loading_sector{
+  position: absolute;
+  width:var(--2xfont);
+  height:var(--2xfont);
+  margin:auto;
+  border: var(--_25xfont) solid transparent;
+  border-radius: 50%;
+  mix-blend-mode: overlay;
+  animation: rotate var(--loading_rotate_duration) var(--loading_rotate_timing) ease-in-out infinte;
+  pointer-events: none;
+}
+.loading_red_border{
+  border-top:lightcoral;
+  --loading_rotate_duration: 1.5s;
+  --loading_rotate_timing: ease-in-out;
+}
+.loading_green_border{
+  border-right:lightgreen;
+  --loading_rotate_duration: 2s;
+  --loading_rotate_timing: ease-in;
+}
+.loading_blue_border{
+  border-bottom:lightblue;
+  --loading_rotate_duration: 2.5s;
+  --loading_rotate_timing: ease-out;
+}
+.loading_yellow_border{
+  border-left:yellow;
+  --loading_rotate_duration: 3s;
+  --loading_rotate_timing: ease-in;
+}
+
+@keyframes rotate{
+  0%{
+    transform: rotate(0);
+  }
+  100%{
+    transform: rotate(360deg);
+  }  
+}
+
+@keyframes text-color{
+  0%{
+    color: rgba(0,0,0,1);
+  }
+  50%{
+    color: rgba(0,0,0,.5);
+  }  
+  100%{
+    color: rgba(0,0,0,.1);
+  }    
 }

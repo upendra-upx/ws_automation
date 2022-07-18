@@ -19,7 +19,7 @@ const MESSAGE_TYPE_AUTO = 3;
 
 var message_object = {
   timestamp: ``,
-  auth_token: ``,
+  auth_token: window.gv_auth_token,
   function: FUNC_SEND,
   from: FROM_WS_AUTO_CLIENT,
   to: ``,
@@ -29,7 +29,6 @@ var message_object = {
 };
 
 var socket;
-var loginstate = true;
 var gv_auth_token;
 
 function displayMessage(message, style) {
@@ -58,12 +57,6 @@ window.onload = function () {
         break;
     }
   });
-  /* document
-    .getElementById("login_button")
-    .addEventListener("click", (event) => Authenticate(event, window));
-  document
-    .getElementById("signup_button")
-    .addEventListener("click", (event) => SignUp(event, window)); */
   document
     .getElementById("msg_ip_btn")
     .addEventListener("click", (event) => SendMsg(event, window));
@@ -139,7 +132,7 @@ function onAuthenticateResponse(response) {
 }
 
 function onAuthenticateError(error) {
-  if (error){
+  if (error) {
     console.error(error);
     alert(`${error} Contact DIY to check if your Account is activated!`);
   }
@@ -180,19 +173,19 @@ function SignUp(event, window) {
   fetch(SignUpRequest)
     .then((response) => onSignupResponse(response))
     //.then((auth_token) => startConnection(auth_token, window))
-    .catch((error) => onSignupError(error))
+    .catch((error) => onSignupError(error));
 }
 
 function onSignupResponse(response) {
   if (response.ok) {
-    alert("Sign up Successful! Please Login now.")
+    alert("Sign up Successful! Please Login now.");
   } else {
     throw `Error in Signing Up.`;
   }
 }
 
 function onSignupError(error) {
-  if (error){
+  if (error) {
     console.error(error);
     alert(`${error} Check if there is already an Account with this Mobile!`);
   }
@@ -222,21 +215,48 @@ function startConnection(auth_token, window) {
   }
 }
 
-function toggleLoginPopup() {
-  if ((loginstate = true)) {
-    var application = document.getElementById(`application`);
-    var login = document.getElementById(`login`);
-    document.getElementById(`login_form`).style.display = `flex`;
+function toggleLoginPopup(window) {
+  var application = document.getElementById(`application`);
+  var login = document.getElementById(`login`);
+  var login_form = document.getElementById(`login_form`);
 
-    application.style.opacity = 1;
-    login.style.display = `none`;
-  } else {
-    var application = document.getElementById(`application`);
-    var login = document.getElementById(`login`);
+  application.style.opacity === 0.3
+    ? (application.style.opacity = 1)
+    : (application.style.opacity = 0.3);
+  login.style.display === `flex`
+    ? (login.style.display = `none`)
+    : login.style.display === `flex`;
+  login_form.style.display === `none`
+    ? (login_form.style.display = `flex`)
+    : (login_form.style.display = `none`);
+}
 
-    application.style.opacity = 0.5;
-    login.style.display = `flex`;
-  }
+function toggleQRCode(qrcode_src, window) {
+  var login_form = document.getElementById("login_form");
+  var qrcode = document.getElementById("qrcode");
+  var qrcode_div = document.getElementById("qrcode_div");
+  login_form.style.display === `flex`
+    ? (login_form.style.display = `none`)
+    : (login_form.style.display = `flex`);
+  qrcode.src = qrcode_src;
+  qrcode_div.style.display === `none`
+    ? (qrcode_div.style.display = `flex`)
+    : (qrcode_div.style.display = `none`);
+}
+
+function toggleConnecting(window) {
+  var login_form = document.getElementById(`login_form`);
+  var qrcode_div = document.getElementById(`qrcode_div`);
+  var login_loading_div = document.getElementById(`login_loading_div`);
+  login_form.style.opacity === 1
+    ? (login_form.style.opacity = 0.6)
+    : (login_form.style.opacity = 1);
+  qrcode_div.style.opacity === 1
+    ? (qrcode_div.style.opacity = 0.6)
+    : (qrcode_div.style.opacity = 1);
+  login_loading_div.style.display === `none`
+    ? (login_loading_div.style.display = `flex`)
+    : (login_loading_div.style.display = `none`);
 }
 
 function SendMsg(event, window) {
@@ -272,8 +292,10 @@ function onSocketOpen(event, window) {
   // Check WhatsApp Client Status, if Ready then Close login popup
   let message_obj = message_object;
   message_obj.timestamp = new Date().toLocaleString();
+  message_obj.auth_token = window.gv_auth_token;
   message_obj.function = FUNC_WS_AUTO_CLIENT_STATE;
   socket.send(JSON.stringify(message_obj));
+  toggleConnecting(window);
 }
 
 function onSocketMessage(message, window) {
@@ -282,18 +304,19 @@ function onSocketMessage(message, window) {
 
   switch (msg.function) {
     case FUNC_WS_AUTO_CLIENT_STATE:
-       switch(msg.message){
-        case WS_AUTO_CLIENT_STATE_CONNECTING: break;
-        case WS_AUTO_CLIENT_STATE_AUTH: break;
-        case WS_AUTO_CLIENT_STATE_READY: 
-        toggleLoginPopup(); break;
-       }
+      switch (msg.message) {
+        case WS_AUTO_CLIENT_STATE_CONNECTING:
+          break;
+        case WS_AUTO_CLIENT_STATE_AUTH:
+          break;
+        case WS_AUTO_CLIENT_STATE_READY:
+          toggleConnecting(window);
+          toggleLoginPopup(window);
+          break;
+      }
       break;
     case FUNC_WS_AUTO_CLIENT_AUTH:
-      
-      document.getElementById("login_form").style.display = `none`;
-      document.getElementById("qrcode").src = msg.message;
-      document.getElementById("qrcode_div").style.display = `flex`;
+      toggleQRCode(msg.message, window);
       break;
     case FUNC_SEND:
       formatInputMessageAndDisplay(msg);
