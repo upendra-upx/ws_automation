@@ -45,8 +45,8 @@ exports.ws_web_auto = class ws_web_auto {
           path.resolve("../"),
           path.format({ dir: "Server", base: "ws_auth_session" })
         ),
-        puppeteer: { args: ["--no-sandbox"] },
       }),
+      puppeteer: { args: ["--no-sandbox"] },
     });
 
     this.ws_simulator.on("qr", (qr) => this.on_WS_Simulator_QR(qr));
