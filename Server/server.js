@@ -323,11 +323,20 @@ function on_Message_From_Client(socket_connection, message) {
       let user =
         active_users.active_users?.get_active_user_by_socket(socket_connection);
       if (user !== null || user !== undefined) {
-        msg_to_broadcast.message = active_users.active_users
-          ?.get_active_user_by_socket(socket_connection)
-          ?.ws_web_auto_instance?.get_WS_Client_State();
-        if (msg_to_broadcast.message !== null) {
-          ws_broadcast_message(socket_connection, msg_to_broadcast);
+        let users = active_users.active_users.get_active_userlist_by_auth_token(
+          client_message_object.auth_token
+        );
+        if (users !== null) {
+          msg_to_broadcast.message = active_users.active_users
+            ?.get_active_user_by_socket(socket_connection)
+            ?.ws_web_auto_instance?.get_WS_Client_State();
+          if (msg_to_broadcast.message !== null) {
+            ws_broadcast_message(socket_connection, msg_to_broadcast);
+          }
+        } else {
+          console.error(
+            "Send Message Rejected due to wrong or missing auth_token"
+          );
         }
       }
     }

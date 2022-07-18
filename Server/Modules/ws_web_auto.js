@@ -45,7 +45,7 @@ exports.ws_web_auto = class ws_web_auto {
           path.resolve("../"),
           path.format({ dir: "Server", base: "ws_auth_session" })
         ),
-        puppeteer: {args: ['--no-sandbox']}
+        puppeteer: { args: ["--no-sandbox"] },
       }),
     });
 
@@ -70,7 +70,7 @@ exports.ws_web_auto = class ws_web_auto {
     return this.client_state;
   }
   on_WS_Simulator_QR(qr) {
-    this.get_Ws_client_state = WS_AUTO_CLIENT_STATE_AUTH;
+    this.client_state = WS_AUTO_CLIENT_STATE_AUTH;
 
     console.log("QR Requested.");
     //qrcode_terminal.generate(qr, { small: true });
@@ -105,7 +105,7 @@ exports.ws_web_auto = class ws_web_auto {
     }
   }
   on_WS_Simulator_Ready() {
-    this.get_Ws_client_state = WS_AUTO_CLIENT_STATE_AUTH;
+    this.client_state = WS_AUTO_CLIENT_STATE_READY;
 
     console.log("WS Web Client is Ready.");
     this.ws_status_msg = `Connected to WhatsApp!`;
