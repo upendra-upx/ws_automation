@@ -46,43 +46,42 @@ function displayMessage(message, style) {
 }
 
 window.onload = function () {
-  document.body.addEventListener("submit", (event) => {
-    event.preventDefault();
-    switch (event.submitter.id) {
-      case `login_button`:
-        Authenticate(event, window);
-        break;
-      case `signup_button`:
-        SignUp(event, window);
-        break;
-    }
-  });
+  initialize_style(window);
+  attachEvents(window);
+};
+
+function initialize_style(window) {
+  let application = document.getElementById(`application`);
+  application.style.opacity = 0.3;
+  let login = document.getElementById(`login`);
+  login.style.display = `flex`;
+  login.style.opacity = 1;
+  let login_form = document.getElementById("login_form");
+  login_form.style.display = `flex`;
+  let qrcode_div = document.getElementById("qrcode_div");
+  qrcode_div.style.display = `none`;
+  qrcode_div.style.opacity = 1;
+  let login_loading_div = document.getElementById(`login_loading_div`);
+  login_loading_div.style.display = `none`;
+  login_loading_div.style.opacity = 1;
+  document.getElementById("open_eye").style.display = `block`;
+  document.getElementById("closed_eye").style.display = `none`;
+}
+
+function attachEvents(window) {
+  document.body.addEventListener("submit", (event) =>
+    handleSubmit(event, window)
+  );
   document
     .getElementById("msg_ip_btn")
     .addEventListener("click", (event) => SendMsg(event, window));
-  document.getElementById("open_eye").style.display = `block`;
-  document.getElementById("closed_eye").style.display = `none`;
+  initialize_style;
   document
     .getElementById("open_eye")
     .addEventListener("click", togglePasswordEye);
   document
     .getElementById("closed_eye")
     .addEventListener("click", togglePasswordEye);
-};
-
-function togglePasswordEye() {
-  var open_eye = document.getElementById("open_eye");
-  var closed_eye = document.getElementById("closed_eye");
-  var password = document.getElementById("password");
-  if (open_eye.style.display == `block`) {
-    open_eye.style.display = `none`;
-    closed_eye.style.display = `block`;
-    password.type = "text";
-  } else {
-    open_eye.style.display = `block`;
-    closed_eye.style.display = `none`;
-    password.type = "password";
-  }
 }
 
 function Authenticate(event, window) {
@@ -219,27 +218,49 @@ function toggleLoginPopup(window) {
   var application = document.getElementById(`application`);
   var login = document.getElementById(`login`);
   var login_form = document.getElementById(`login_form`);
+  var qrcode_div = document.getElementById("qrcode_div");
 
-  application.style.opacity === 0.3
+  application.style.opacity == 0.3
     ? (application.style.opacity = 1)
     : (application.style.opacity = 0.3);
-  login.style.display === `flex`
+  login.style.display == `flex`
     ? (login.style.display = `none`)
-    : login.style.display === `flex`;
-  login_form.style.display === `none`
+    : (login.style.display = `flex`);
+  login.style.opacity == 0.6
+    ? (login.style.opacity = 1)
+    : (login.style.opacity = 0.6);
+  login_form.style.display == `none`
     ? (login_form.style.display = `flex`)
     : (login_form.style.display = `none`);
+  qrcode_div.style.display == `none`
+    ? (qrcode_div.style.display = `flex`)
+    : (qrcode_div.style.display = `none`);
+}
+
+function togglePasswordEye() {
+  var open_eye = document.getElementById("open_eye");
+  var closed_eye = document.getElementById("closed_eye");
+  var password = document.getElementById("password");
+  if (open_eye.style.display == `block`) {
+    open_eye.style.display = `none`;
+    closed_eye.style.display = `block`;
+    password.type = "text";
+  } else {
+    open_eye.style.display = `block`;
+    closed_eye.style.display = `none`;
+    password.type = "password";
+  }
 }
 
 function toggleQRCode(qrcode_src, window) {
   var login_form = document.getElementById("login_form");
   var qrcode = document.getElementById("qrcode");
   var qrcode_div = document.getElementById("qrcode_div");
-  login_form.style.display === `flex`
+  login_form.style.display == `flex`
     ? (login_form.style.display = `none`)
     : (login_form.style.display = `flex`);
   qrcode.src = qrcode_src;
-  qrcode_div.style.display === `none`
+  qrcode_div.style.display == `none`
     ? (qrcode_div.style.display = `flex`)
     : (qrcode_div.style.display = `none`);
 }
@@ -248,15 +269,29 @@ function toggleConnecting(window) {
   var login_form = document.getElementById(`login_form`);
   var qrcode_div = document.getElementById(`qrcode_div`);
   var login_loading_div = document.getElementById(`login_loading_div`);
-  login_form.style.opacity === 1
+  login_form.style.opacity == 1
     ? (login_form.style.opacity = 0.6)
     : (login_form.style.opacity = 1);
-  qrcode_div.style.opacity === 1
+  qrcode_div.style.opacity == 1
     ? (qrcode_div.style.opacity = 0.6)
     : (qrcode_div.style.opacity = 1);
-  login_loading_div.style.display === `none`
+  login_loading_div.style.display == `none`
     ? (login_loading_div.style.display = `flex`)
     : (login_loading_div.style.display = `none`);
+}
+
+function handleSubmit(event, window) {
+  {
+    event.preventDefault();
+    switch (event.submitter.id) {
+      case `login_button`:
+        Authenticate(event, window);
+        break;
+      case `signup_button`:
+        SignUp(event, window);
+        break;
+    }
+  }
 }
 
 function SendMsg(event, window) {

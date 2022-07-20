@@ -1,11 +1,18 @@
 {
     "configurations": [                
+        {
+            "command": "npm start",
+            "name": "Run npm start",
+            "request": "launch",
+            "type": "node-terminal"
+        },
+
         
         {
             "console": "integratedTerminal",
             "internalConsoleOptions": "neverOpen",
             "name": "nodemon",
-            "cwd": "${workspaceFolder}/Server/",
+            "cwd": "${workspaceFolder}/Server",
             "program": "${workspaceFolder}/Server/server.js",
             "request": "launch",
             "restart": true,
@@ -19,7 +26,7 @@
             "command": "npm test",
             "name": "Run NPM Test",
             "request": "launch",
-            "cwd": "${workspaceFolder}/Server/",
+            "cwd": "${workspaceFolder}/Server",
             "type": "node-terminal"
         },
 

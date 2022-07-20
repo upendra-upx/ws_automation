@@ -32,7 +32,6 @@
   --basecolor: hsl(0, 85%, 65%);
   --basehovercolor: hsl(0, 75%, 75%);
   --baseactivecolor: hsl(0, 65%, 85%);
-  --appopacity: 0.2;
 }
 
 *, *::before, *::after {
@@ -97,7 +96,6 @@ body::-webkit-scrollbar-track {
   flex-direction: row;
   width: 100%;
   height: 100%;
-  opacity: var(--appopacity);
 }
 
 .login {
@@ -435,16 +433,17 @@ body::-webkit-scrollbar-track {
 }
 
 .login_loading_div{
-  display: none;
   position: relative;
   overflow: hidden;
 }
 
 .loading_text{
   display: flex;
-  animation: text-color 2s ease-in-out infinite alternate;
+  animation: loading_text_color 2s ease-in-out infinite alternate;
 }
+
 .loading_sector{
+  display: flex;
   position: absolute;
   width:var(--2xfont);
   height:var(--2xfont);
@@ -452,31 +451,35 @@ body::-webkit-scrollbar-track {
   border: var(--_25xfont) solid transparent;
   border-radius: 50%;
   mix-blend-mode: overlay;
-  animation: rotate var(--loading_rotate_duration) var(--loading_rotate_timing) ease-in-out infinte;
+  animation: loading_rotate var(--loading_rotate_duration) var(--loading_rotate_timing) ease-in-out infinte;
   pointer-events: none;
 }
+
 .loading_red_border{
   border-top:lightcoral;
   --loading_rotate_duration: 1.5s;
   --loading_rotate_timing: ease-in-out;
 }
+
 .loading_green_border{
   border-right:lightgreen;
   --loading_rotate_duration: 2s;
   --loading_rotate_timing: ease-in;
 }
+
 .loading_blue_border{
   border-bottom:lightblue;
   --loading_rotate_duration: 2.5s;
   --loading_rotate_timing: ease-out;
 }
+
 .loading_yellow_border{
   border-left:yellow;
   --loading_rotate_duration: 3s;
   --loading_rotate_timing: ease-in;
 }
 
-@keyframes rotate{
+@keyframes loading_rotate{
   0%{
     transform: rotate(0);
   }
@@ -485,7 +488,7 @@ body::-webkit-scrollbar-track {
   }  
 }
 
-@keyframes text-color{
+@keyframes loading_text_color{
   0%{
     color: rgba(0,0,0,1);
   }
